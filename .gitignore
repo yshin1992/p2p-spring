@@ -6,4 +6,5 @@ target/
 
 *.project
 
+.idea/
 src/main/resources/jdbc.properties
