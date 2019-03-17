@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+   <modelVersion>4.0.0</modelVersion>
+  <parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>1.5.2.RELEASE</version>
+	</parent>
+ 
 
   <groupId>com.njmcxr.p2p</groupId>
-  <artifactId>manager</artifactId>
+  <artifactId>parent</artifactId>
   <version>0.0.1-SNAPSHOT</version>
-  <packaging>war</packaging>
 
   <name>manager Maven Webapp</name>
   <!-- FIXME change it to the project's website -->
@@ -18,12 +21,12 @@
     <maven.compiler.source>1.7</maven.compiler.source>
     <maven.compiler.target>1.7</maven.compiler.target>
   </properties>
+	
 
   <dependencies>
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
-      <version>4.11</version>
       <scope>test</scope>
     </dependency>
   </dependencies>
@@ -64,4 +67,13 @@
       </plugins>
     </pluginManagement>
   </build>
+  <packaging>pom</packaging>
+  <modules>
+    <module>background</module>
+    <module>background</module>
+    <module>business</module>
+    <module>dao-hibernate</module>
+    <module>dao-springdata</module>
+    <module>dao-mybatis</module>
+  </modules>
 </project>
