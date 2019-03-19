@@ -20,7 +20,7 @@ public class FormLoginServlet extends HttpServlet{
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-		req.getRequestDispatcher("/WEB-INF/login.jsp").forward(req, resp);
+		req.getRequestDispatcher("/WEB-INF/formLogin.jsp").forward(req, resp);
 	}
 
 	@Override
@@ -36,7 +36,11 @@ public class FormLoginServlet extends HttpServlet{
             req.setAttribute("error", "未知错误：" + errorClassName);
         }
 		
-		req.getRequestDispatcher("/WEB-INF/login.jsp").forward(req, resp);
+		if(errorClassName != null){
+			req.getRequestDispatcher("/WEB-INF/formLogin.jsp").forward(req, resp);
+		}else{
+			req.getRequestDispatcher("/WEB-INF/loginsuccess.jsp").forward(req, resp);
+		}
 		
 	}
 

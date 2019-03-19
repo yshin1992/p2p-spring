@@ -37,7 +37,8 @@ public class LoginServlet extends HttpServlet{
 		UsernamePasswordToken token = new UsernamePasswordToken(username, password);
 		//直接获取Subject即可
 		Subject subject = SecurityUtils.getSubject();
-		
+		System.out.println(subject.getSession().getId());
+		System.out.println(subject.getSession().getHost());
 		token.setRememberMe(true);
 		String error=null;
 		try{

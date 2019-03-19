@@ -7,6 +7,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-欢迎您，登录成功！
+欢迎您，登录成功！<a href="${webRoot }/logout2">退出登录</a>
 </body>
 </html>
