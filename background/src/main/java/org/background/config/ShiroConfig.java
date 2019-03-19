@@ -15,7 +15,7 @@ import org.springframework.context.annotation.Configuration;
  * @author yanshuai
  *
  */
-@Configuration//声明这是一个配置文件
+//@Configuration//声明这是一个配置文件
 public class ShiroConfig {
 
 	@Bean

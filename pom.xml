@@ -75,5 +75,6 @@
     <module>dao-hibernate</module>
     <module>dao-springdata</module>
     <module>dao-mybatis</module>
+    <module>shiro-servlet</module>
   </modules>
 </project>
