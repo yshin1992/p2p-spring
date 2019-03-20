@@ -6,7 +6,7 @@ import org.ysh.dao.UsersDao;
 import org.ysh.domain.Users;
 import org.ysh.service.UsersService;
 
-@Service("userService")
+@Service("usersService")
 public class UsersServiceImpl implements UsersService {
 	
 	@Autowired

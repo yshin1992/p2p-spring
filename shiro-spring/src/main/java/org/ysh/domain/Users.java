@@ -27,7 +27,7 @@ public class Users implements Serializable {
 	@Column
 	private String password;
 	
-	@Column
+	@Column(name="password_salt")
 	private String passwordSalt;
 
 	public Integer getId() {

@@ -28,7 +28,7 @@ public class UsersController {
 	}
 	
 	@RequestMapping("/loginsuccess")
-	public String loginsuccess(){
-		return "loginsuccess";
+	public ModelAndView loginsuccess(ModelMap model){
+		return new ModelAndView("loginsuccess",model);
 	}
 }

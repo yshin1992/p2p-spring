@@ -25,9 +25,22 @@
         <property name="authorizationCacheName" value="authorizationCache"/>
 	</bean>
 	
+	<!-- 这里我们使用自己的Realm -->
+	<bean id="hashedCredentialsMatcher" class="org.apache.shiro.authc.credential.HashedCredentialsMatcher">
+		<property name="hashAlgorithmName" value="MD5"/>
+		<property name="hashIterations" value="2"/>
+	</bean>
+	<bean id="customRealm" class="org.ysh.shiro.CostomRealm">
+		<property name="usersService" ref="usersService"/>
+		<property name="credentialsMatcher" ref="hashedCredentialsMatcher"/>
+		<property name="cachingEnabled" value="true"/>
+        <property name="authenticationCachingEnabled" value="true"/>
+        <property name="authenticationCacheName" value="authenticationCache"/>
+	</bean>
+	
 	 <!-- 安全管理器 -->
     <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
-        <property name="realm" ref="jdbcRealm"/>
+        <property name="realm" ref="customRealm"/>
         <property name="cacheManager" ref="cacheManager"/>
     </bean>	
 		

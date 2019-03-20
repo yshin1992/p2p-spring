@@ -34,7 +34,7 @@
     此时指定的include-filter没有起到作用，只要把use-default-filter设置成false就可以了。这样就可以避免在base-packeage配置多个包名这种不是很优雅的方法来解决这个问题了。  
     另外在我参与的项目中可以发现在base-package指定的包中有的子包是不含有注解了，所以不用扫描，此时可以指定<context:exclude-filter>来进行过滤，说明此包不需要被扫描。综合以上说明  
     Use-dafault-filters=”false”的情况下：<context:exclude-filter>指定的不扫描，<context:include-filter>指定的扫描-->  
-	<context:component-scan base-package="org.ysh.controller,org.ysh.dao.impl,org.ysh.service.impl" use-default-filters="true"><!-- 这里必须指定为false才能生效 -->
+	<context:component-scan base-package="org.ysh.controller" use-default-filters="true"><!-- 这里必须指定为false才能生效 -->
 	</context:component-scan>
 	
 	 <!-- 视图解析器，根据视图的名称new ModelAndView(name)，在配置文件查找对应的bean配置  

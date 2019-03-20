@@ -7,6 +7,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-欢迎您，登录成功！<a href="logout">退出登录</a>
+欢迎您，${curUser.username } ,登录成功！<a href="logout">退出登录</a>
 </body>
 </html>

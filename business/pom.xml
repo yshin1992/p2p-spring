@@ -7,9 +7,7 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
-  <groupId>com.njmcxr.p2p</groupId>
   <artifactId>business</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
 
   <name>business</name>
   <!-- FIXME change it to the project's website -->
@@ -22,10 +20,14 @@
   </properties>
 
   <dependencies>
+  	<dependency>
+      <groupId>com.njmcxr.p2p</groupId>
+      <artifactId>dao-hibernate</artifactId>
+      <version>0.0.1-SNAPSHOT</version>
+    </dependency>
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
-      <version>4.11</version>
       <scope>test</scope>
     </dependency>
   </dependencies>

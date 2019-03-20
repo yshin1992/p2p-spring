@@ -1,7 +1,9 @@
-package org.business.system;
+package org.dao.hibernate.system;
 
 import org.domain.system.User;
 
-public interface UserService {
+public interface UserDao {
+
 	public User findByCd(String userCd);
+	
 }

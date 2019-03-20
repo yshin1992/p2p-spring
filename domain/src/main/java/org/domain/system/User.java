@@ -3,6 +3,7 @@ package org.domain.system;
 import java.util.Date;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -14,6 +15,7 @@ import org.domain.StaticEntity;
 import org.hibernate.annotations.GenericGenerator;
 import org.util.StringUtil;
 
+@Entity
 @Table(name="sys_user")
 public class User extends StaticEntity{
 
@@ -39,10 +41,10 @@ public class User extends StaticEntity{
 	/**
 	 * 用户名称
 	 */
-	@Column(length=128)
+	@Column(length=128,unique=true)
 	private String userNm;
 	/**
-	 * 登录密码,加密算法:md5(md5(password)+userCd)
+	 * 登录密码,加密算法:SimpleHash("MD5", password, realCd,2)
 	 */
 	@Column(length=32)
 	private String password;

@@ -5,8 +5,9 @@ import java.util.Map;
 
 import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
+import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
+import org.background.shiro.CustomerRealm;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 
 /**
  * 参考https://412887952-qq-com.iteye.com/blog/2299777
@@ -19,8 +20,8 @@ import org.springframework.context.annotation.Configuration;
 public class ShiroConfig {
 
 	@Bean
-	public SecurityManager securityManager(){
-		return null;
+	public SecurityManager securityManager(CustomerRealm customerRealm){
+		return new DefaultWebSecurityManager(customerRealm);
 	}
 	
 	/** 
@@ -47,6 +48,7 @@ public class ShiroConfig {
 		filterChainDefinitionMap.put("/favicon.ico", "anno");
 		filterChainDefinitionMap.put("/static/**", "anno");
 		filterChainDefinitionMap.put("/logout.html*", "logout");
+		filterChainDefinitionMap.put("/**", "user");
 		bean.setFilterChainDefinitionMap(filterChainDefinitionMap);
 		
 		bean.setLoginUrl("/login");
