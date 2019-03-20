@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:jee="http://www.springframework.org/schema/jee"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+		
+		<context:property-placeholder location="classpath:jdbc.properties"/>
+		<!-- 生产环境数据源 @ActiveProfiles("production") -->
+		<bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource">
+				<property name="driverClassName" value="${jdbc.driverClass}" />
+				<property name="url" value="${jdbc.url}" />
+				<property name="username" value="${jdbc.user}" />
+				<property name="password" value="${jdbc.password}" /> 
+				<!-- druid 连接池的 -->
+				<property name="filters" value="stat" />
+				<!-- 下面druid 和 dbcp 连接池通用的  -->
+				<!--maxActive: 最大连接数量 -->
+				<property name="maxActive" value="20" />
+				<!--initialSize: 初始化连接 -->
+				<property name="initialSize" value="5" />
+			</bean>
+	
+	
+	
+</beans>

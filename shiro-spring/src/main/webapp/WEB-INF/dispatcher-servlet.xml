@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xmlns:context="http://www.springframework.org/schema/context"
+	   xmlns:aop="http://www.springframework.org/schema/aop"
+	   xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+				           http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+				           http://www.springframework.org/schema/aop  http://www.springframework.org/schema/aop/spring-aop.xsd
+				           http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
+				           http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
+	
+	<!-- 扫描包，并指定扫描包含的注解方式为controller -->
+	  <!--注解探测器,在xml配置了这个标签后，spring可以自动去扫描base-pack下面或者子包下面的java文件，  
+    如果扫描到有@Component @Controller@Service等这些注解的类，则把这些类注册为bean  
+    注意：如果配置了<context:component-scan>那么<context:annotation-config/>标签就可以不用再xml中配置了，因为前者包含了后者。  
+    另外<context:annotation-config/>还提供了两个子标签  
+    1. <context:include-filter> 2.<context:exclude-filter>  
+    <context:component-scan>有一个use-default-filters属性，改属性默认为true,这就意味着会扫描指定包下的全部的标有@Component的类，  
+    并注册成bean.也就是@Component的子注解@Service,@Reposity等。所以如果仅仅是在配置文件中这么写  
+    <context:component-scan base-package="com.test.myapp.web"/>  
+     Use-default-filter此时为true,那么会对base-package包或者子包下的jun所有的进行java类进行扫描,并把匹配的java类注册成bean。  
+    可以发现这种扫描的粒度有点太大，如果你只想扫描指定包下面的Controller，该怎么办？此时子标签<context:incluce-filter>就起到了勇武之地。如下所示  
+    <context:component-scan base-package="com.test.myapp.web.Controller">  
+    <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>  
+    </context:component-scan>  
+    这样就会只扫描base-package指定下的有@Controller下的java类，并注册成bean.  
+    但是因为use-dafault-filter在上面并没有指定，默认就为true，所以当把上面的配置改成如下所示的时候，就会产生与你期望相悖的结果（注意base-package包值得变化）  
+    <context:component-scan base-package="com.test.myapp.web ">  
+    <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>  
+    </context:component-scan>  
+    此时，spring不仅扫描了@Controller，还扫描了指定包所在的子包service包下注解@Service的java类  
+    此时指定的include-filter没有起到作用，只要把use-default-filter设置成false就可以了。这样就可以避免在base-packeage配置多个包名这种不是很优雅的方法来解决这个问题了。  
+    另外在我参与的项目中可以发现在base-package指定的包中有的子包是不含有注解了，所以不用扫描，此时可以指定<context:exclude-filter>来进行过滤，说明此包不需要被扫描。综合以上说明  
+    Use-dafault-filters=”false”的情况下：<context:exclude-filter>指定的不扫描，<context:include-filter>指定的扫描-->  
+	<context:component-scan base-package="org.ysh.controller,org.ysh.dao.impl,org.ysh.service.impl" use-default-filters="true"><!-- 这里必须指定为false才能生效 -->
+	</context:component-scan>
+	
+	 <!-- 视图解析器，根据视图的名称new ModelAndView(name)，在配置文件查找对应的bean配置  
+     这个视图解析器跟XmlViewResolver有点类似，也是通过把返回的逻辑视图名称去匹配定义好的视图bean对象。  
+     不同点有二，一是BeanNameViewResolver要求视图bean对象都定义在Spring的application context中，  
+     而XmlViewResolver是在指定的配置文件中寻找视图bean对象，二是BeanNameViewResolver不会进行视图缓存。  
+     如果没有设置viewResolver，spring使用InternalResourceViewResolver进行解析。  
+     Spring实现ViewResolver的非抽象类且我们经常使用的viewResolver有以下四种：  
+     1、InternalResourceViewResolver  将逻辑视图名字解析为一个路径  
+     2、BeanNameViewResolver  将逻辑视图名字解析为bean的Name属性，从而根据name属性，找定义View的bean  
+     3、ResourceBundleResolver   和BeanNameViewResolver一样，只不过定义的view-bean都在一个properties文件中，用这个类进行加载这个properties文件  
+     4、XmlViewResolver  和ResourceBundleResolver一样，只不过定义的view-bean在一个xml文件中，用这个类来加载xml文件  
+     DispatcherServlet会加载所有的viewResolver到一个list中，并按照优先级进行解析。  
+     我们不想只使用一种视图解析器的话，可以在[spring-dispatcher-name]-servlet.xml定义多个viewResolver：  
+     注意order中的值越小，优先级越高。而id为viewResolver 的viewResolver的优先级是最低的。  
+     --> 
+     
+     <mvc:annotation-driven />
+     <mvc:resources location="/layui/" mapping="/layui/**"></mvc:resources>
+     
+     <!-- 配置viewResolver -->	
+     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+     	<property name="prefix">
+     		<value>/WEB-INF/views/</value>
+     	</property>
+     	<property name="suffix" value=".jsp"></property>
+     	<property name="viewClass" value="org.springframework.web.servlet.view.JstlView"></property>
+     </bean>
+     
+	<!-- 
+	<mvc:view-controller path="/" view-name="system/index"/>
+	 -->
+</beans>
