@@ -22,9 +22,9 @@
 
 	<dependencies>
 		<dependency>
-		<groupId>com.njmcxr.p2p</groupId>
-		<artifactId>business</artifactId>
-		<version>0.0.1-SNAPSHOT</version>
+			<groupId>com.njmcxr.p2p</groupId>
+			<artifactId>business</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>commons-logging</groupId>
@@ -62,16 +62,26 @@
 			<artifactId>tomcat-embed-jasper</artifactId>
 			<scope>provided</scope>
 		</dependency>
-		
+
 		<dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>druid</artifactId>
-            <version>0.2.23</version>
-        </dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>druid</artifactId>
+			<version>0.2.23</version>
+		</dependency>
+		<dependency>
+			<artifactId>kaptcha</artifactId>
+			<groupId>com.github.axet</groupId>
+			<version>2.3.2</version>
+		</dependency>
+		<dependency>
+    		<groupId>com.jhlabs</groupId>
+    		<artifactId>filters</artifactId>
+    		<version>2.0.235</version>
+		</dependency>
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>

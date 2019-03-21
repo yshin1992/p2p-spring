@@ -10,6 +10,7 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class UserController {
 
+	
 	@RequestMapping(value="/login",method=RequestMethod.GET)
 	public String login(){
 		return "system/login";

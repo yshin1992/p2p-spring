@@ -1,5 +1,7 @@
 package org.business.system.impl;
 
+import javax.transaction.Transactional;
+
 import org.business.system.UserService;
 import org.dao.hibernate.system.UserDao;
 import org.domain.system.User;
@@ -15,6 +17,13 @@ public class UserServiceImpl implements UserService{
 	@Override
 	public User findByCd(String userCd) {
 		return userDao.findByCd(userCd);
+	}
+
+	@Transactional
+	@Override
+	public void save(User user) {
+		// TODO Auto-generated method stub
+		userDao.save(user);
 	}
 
 }

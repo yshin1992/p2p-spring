@@ -1,12 +1,17 @@
 package org.background.config;
 
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
+
+import javax.servlet.Filter;
 
 import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.spring.LifecycleBeanPostProcessor;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
+import org.apache.shiro.web.filter.authc.FormAuthenticationFilter;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
+import org.background.shiro.CustomerFormAuthenticationFilter;
 import org.background.shiro.CustomerRealm;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -50,11 +55,16 @@ public class ShiroConfig {
 		ShiroFilterFactoryBean bean = new ShiroFilterFactoryBean();
 		//设置SecurityManager
 		bean.setSecurityManager(securityManager);
+		
+		Map<String, Filter> filters = new HashMap<String,Filter>();
+		filters.put("authc",formAuthenticationFilter());
+		bean.setFilters(filters);
 		//拦截器
 		Map<String,String> filterChainDefinitionMap = new LinkedHashMap<String,String>();
 		filterChainDefinitionMap.put("/login*", "authc");//这里必须是login*，如果是login.html则是login.html*因为后面会有jsessionID之类的后缀，会影响到URL匹配到这个过滤器上
 		filterChainDefinitionMap.put("/", "authc");
 		filterChainDefinitionMap.put("/favicon.ico", "anon");
+		filterChainDefinitionMap.put("/login/captcha.png*", "anon");
 		filterChainDefinitionMap.put("/static/**", "anon");
 		filterChainDefinitionMap.put("/logout", "logout");
 		filterChainDefinitionMap.put("/**", "user");
@@ -67,6 +77,13 @@ public class ShiroConfig {
 		return bean;
 	}
 	
+	@Bean
+	public FormAuthenticationFilter formAuthenticationFilter(){
+		FormAuthenticationFilter filter = new CustomerFormAuthenticationFilter();
+		filter.setSuccessUrl("/index");
+		return filter;
+	}
+
 	/**
      * 负责shiroBean的生命周期
      */

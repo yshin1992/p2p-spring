@@ -4,7 +4,7 @@ import java.util.Date;
 
 import org.apache.commons.lang3.time.DateUtils;
 import org.apache.shiro.crypto.hash.SimpleHash;
-import org.dao.hibernate.system.UserDao;
+import org.business.system.UserService;
 import org.domain.system.User;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -23,7 +23,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 public class UserDaoTest {
 	
 	@Autowired
-	private UserDao userDao;
+	private UserService userService;
 	
 	@Test
 	public void testUserAdd(){
@@ -35,6 +35,6 @@ public class UserDaoTest {
 		user.setExpTime(DateUtils.addYears(new Date(), 100));
 		user.setUserNm("administrator");
 		user.setEnable(true);
-		userDao.save(user);
+		userService.save(user);
 	}
 }
