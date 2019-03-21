@@ -4,10 +4,15 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import org.apache.shiro.mgt.SecurityManager;
+import org.apache.shiro.spring.LifecycleBeanPostProcessor;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.background.shiro.CustomerRealm;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
 
 /**
  * 参考https://412887952-qq-com.iteye.com/blog/2299777
@@ -16,12 +21,17 @@ import org.springframework.context.annotation.Bean;
  * @author yanshuai
  *
  */
-//@Configuration//声明这是一个配置文件
+@Configuration//声明这是一个配置文件
+@ComponentScan(basePackages={"org.background.shiro"})
 public class ShiroConfig {
-
+	
+	private static final Logger logger = LoggerFactory.getLogger(ShiroConfig.class);
 	@Bean
 	public SecurityManager securityManager(CustomerRealm customerRealm){
-		return new DefaultWebSecurityManager(customerRealm);
+		DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
+		System.out.println("初始化Shiro -->" + customerRealm);
+		securityManager.setRealm(customerRealm);
+		return securityManager;
 	}
 	
 	/** 
@@ -36,27 +46,32 @@ public class ShiroConfig {
      * 
      */  
 	@Bean
-	public ShiroFilterFactoryBean shirFilter(SecurityManager securityManager){
+	public ShiroFilterFactoryBean shiroFilter(SecurityManager securityManager){
 		ShiroFilterFactoryBean bean = new ShiroFilterFactoryBean();
 		//设置SecurityManager
 		bean.setSecurityManager(securityManager);
-		
 		//拦截器
-		Map<String,String> filterChainDefinitionMap = new LinkedHashMap<>();
+		Map<String,String> filterChainDefinitionMap = new LinkedHashMap<String,String>();
+		filterChainDefinitionMap.put("/login*", "authc");//这里必须是login*，如果是login.html则是login.html*因为后面会有jsessionID之类的后缀，会影响到URL匹配到这个过滤器上
 		filterChainDefinitionMap.put("/", "authc");
-		filterChainDefinitionMap.put("/login.html*", "authc");
-		filterChainDefinitionMap.put("/favicon.ico", "anno");
-		filterChainDefinitionMap.put("/static/**", "anno");
-		filterChainDefinitionMap.put("/logout.html*", "logout");
+		filterChainDefinitionMap.put("/favicon.ico", "anon");
+		filterChainDefinitionMap.put("/static/**", "anon");
+		filterChainDefinitionMap.put("/logout", "logout");
 		filterChainDefinitionMap.put("/**", "user");
 		bean.setFilterChainDefinitionMap(filterChainDefinitionMap);
-		
 		bean.setLoginUrl("/login");
 		bean.setSuccessUrl("/index");
 		bean.setUnauthorizedUrl("/403");
 		
+		logger.error("Shiro 初始化完成...");
 		return bean;
 	}
 	
-	
+	/**
+     * 负责shiroBean的生命周期
+     */
+    @Bean
+    public LifecycleBeanPostProcessor lifecycleBeanPostProcessor(){
+        return new LifecycleBeanPostProcessor();
+    }
 }

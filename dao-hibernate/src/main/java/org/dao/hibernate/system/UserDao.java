@@ -6,4 +6,5 @@ public interface UserDao {
 
 	public User findByCd(String userCd);
 	
+	public void save(User user);
 }

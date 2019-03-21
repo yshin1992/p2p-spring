@@ -35,6 +35,7 @@
     </div>
   </div>
  </form>
+ <div>${error }</div>
 <script src="static/layui-v2.4.5/layui/layui.js"></script>
 <script>
 layui.use('form', function(){

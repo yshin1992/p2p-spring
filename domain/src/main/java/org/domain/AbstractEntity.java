@@ -20,7 +20,7 @@ public abstract class AbstractEntity implements Serializable{
 
 	private static final long serialVersionUID = -4181970274497470818L;
 
-	protected String DEFAULTCREATEBY = "system";
+	protected static String DEFAULTCREATEBY = "system";
 	
 	//悲观锁：把所需要的数据全部加锁，不允许其他事务对数据做修改 update xxx where xxxx for update
 	//乐观锁：对数据进行版本校验，如果版本不一致，则操作数据失败 update xxx,version+1  where xxxx and version=x
@@ -31,11 +31,11 @@ public abstract class AbstractEntity implements Serializable{
 	@Temporal(TemporalType.TIMESTAMP)
 	@DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
 	@JsonIgnore//生成json 时不生成该属性
-	@Column
+	@Column(name="createTime")
 	private Date createTime=new Date();
 	
 	@JsonIgnore
-	@Column(length=32)
+	@Column(name="createBy",length=32)
 	private String createBy = DEFAULTCREATEBY;
 	
 	@Transient
@@ -44,10 +44,10 @@ public abstract class AbstractEntity implements Serializable{
 	@JsonIgnore//生成json 时不生成该属性
 	private Date effTime;
 	
-	@Transient
 	@Temporal(TemporalType.TIMESTAMP)
 	@DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
 	@JsonIgnore//生成json 时不生成该属性
+	@Transient
 	private Date expTime;
 
 	public Integer getVersion() {

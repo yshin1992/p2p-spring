@@ -78,7 +78,7 @@ public class CustomerRealm extends AuthorizingRealm {
 		Subject curUser = SecurityUtils.getSubject();
 		System.out.println(curUser.getSession().getAttribute("curUser"));
 		curUser.getSession().setAttribute("curUser", user);
-		
+		logger.error("生成认证信息...");
 		return new SimpleAuthenticationInfo(username,user.getPassword(),ByteSource.Util.bytes(user.getUserCd()),getName());
 	}
 

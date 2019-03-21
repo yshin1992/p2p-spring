@@ -75,7 +75,7 @@
   <packaging>pom</packaging>
   <modules>
     <module>background</module>
-    <module>background</module>
+    <module>domain</module>
     <module>business</module>
     <module>dao-hibernate</module>
     <module>dao-springdata</module>

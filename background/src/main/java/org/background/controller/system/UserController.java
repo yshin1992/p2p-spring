@@ -15,7 +15,7 @@ public class UserController {
 		return "system/login";
 	}
 	
-	@RequestMapping(value="/login")
+	@RequestMapping(value="/login",method=RequestMethod.POST)
 	public ModelAndView login(WebRequest request,ModelMap model){
 		Object object = request.getAttribute("shiroLoginFailure",WebRequest.SCOPE_REQUEST);
 		if (object != null) {

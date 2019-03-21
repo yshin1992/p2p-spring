@@ -3,18 +3,19 @@ package org.background;
 import org.background.config.ShiroConfig;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
-import org.springframework.test.context.ContextConfiguration;
+import org.springframework.context.annotation.Import;
 
 /**
  * Hello world!
  *
  */
 @SpringBootApplication
-@ContextConfiguration(classes={ShiroConfig.class})
-@ComponentScan(basePackages={"org.dao.hibernate","org.business","org.background.controller","org.background.controller"})
-@EnableJpaRepositories(basePackages={"org.domain"})
+@Import(value={ShiroConfig.class})
+@ComponentScan(basePackages={"org.dao.hibernate","org.business","org.background.controller","org.background.shiro"})
+//@EnableJpaRepositories(basePackages={"org.domain"})
+@EntityScan(basePackages={"org.domain"})
 public class App 
 {
     public static void main( String[] args )

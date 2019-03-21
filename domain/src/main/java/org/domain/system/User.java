@@ -30,35 +30,35 @@ public class User extends StaticEntity{
 	@Id
 	@GenericGenerator(name="systemUUID",strategy="uuid")
 	@GeneratedValue(generator="systemUUID")
-	@Column(length=32)
+	@Column(name="userId",length=32)
 	private String userId;
 	/**
 	 * 登录账号
 	 * 同时作为盐值
 	 */
-	@Column(length=32,unique=true)
+	@Column(name="userCd",length=32,unique=true)
 	private String userCd;
 	/**
 	 * 用户名称
 	 */
-	@Column(length=128,unique=true)
+	@Column(name="userNm",length=128,unique=true)
 	private String userNm;
 	/**
 	 * 登录密码,加密算法:SimpleHash("MD5", password, realCd,2)
 	 */
-	@Column(length=32)
+	@Column(name="password",length=32)
 	private String password;
 	
 	/**
 	 * 最近登录时间
 	 */
-	@Column
+	@Column(name="lastLogin")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date lastLogin;
 	/**
 	 * 最近登录Ip
 	 */
-	@Column(length=16)
+	@Column(name="lastIp",length=16)
 	private String lastIp;
 	
 	/**
@@ -67,7 +67,7 @@ public class User extends StaticEntity{
 	 * 管理员只能访问非业务功能,在系统初始化时确定
 	 * 其他用户只能访问业务功能
 	 */
-	@Column
+	@Column(name="isAdmin")
 	private Integer isAdmin=0;
 	
 	@Override

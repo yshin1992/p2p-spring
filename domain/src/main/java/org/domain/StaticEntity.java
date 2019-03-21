@@ -18,12 +18,12 @@ public abstract class StaticEntity extends AbstractEntity {
 	public static final String STATE_ENABLED = "F0A";
 	public static final String STATE_DISABLED = "F0X";
 
-	@Column
+	@Column(name="effTime")
 	@Temporal(TemporalType.TIMESTAMP)
 	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	private Date effTime;
 
-	@Column
+	@Column(name="expTime")
 	@Temporal(TemporalType.TIMESTAMP)
 	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	private Date expTime;
@@ -31,12 +31,12 @@ public abstract class StaticEntity extends AbstractEntity {
 	@Column(length = 3)
 	private String state;
 
-	@Column
+	@Column(name="stateTime")
 	@Temporal(TemporalType.TIMESTAMP)
 	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	private Date stateTime;
 
-	@Column(nullable=false)
+	@Column(name="listSort",nullable=false)
 	private Integer listSort = Integer.valueOf(1);
 
 	public Date getEffTime() {
