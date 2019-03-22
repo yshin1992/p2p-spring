@@ -41,6 +41,7 @@ public class CustomerRealm extends AuthorizingRealm {
 		super();
 		HashedCredentialsMatcher matcher = new HashedCredentialsMatcher("MD5");
 		matcher.setHashIterations(2);
+		matcher.setStoredCredentialsHexEncoded(true);
 		setCredentialsMatcher(matcher);
 		setCachingEnabled(true);
 		setAuthenticationCachingEnabled(true);

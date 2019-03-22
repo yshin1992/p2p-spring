@@ -1,6 +1,7 @@
 package org.dao.hibernate.system.impl;
 
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import org.dao.hibernate.system.UserDao;
@@ -11,7 +12,7 @@ import org.springframework.stereotype.Repository;
 @Repository("userDao")
 public class UserDaoImpl implements UserDao {
 
-	@Autowired
+	@PersistenceContext
 	private EntityManager entityManager;
 	
 	@Override

@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>后台管理系统</title>
 <link rel="stylesheet" href="static/layui-v2.4.5/layui/css/layui.css">
 <style>
 img{
@@ -14,7 +14,7 @@ img{
 </head>
 <body>
 
-<form class="layui-form" action="login" method="post">
+<form class="layui-form" action="${webRoot }/login" method="post">
   <div class="layui-form-item">
     <label class="layui-form-label">用户名</label>
     <div class="layui-input-inline">
@@ -37,7 +37,7 @@ img{
   </div>
   <div class="layui-form-item">
     <div class="layui-input-block">
-      <input type="checkbox" name="" lay-skin="primary" title="记住密码">
+      <input type="checkbox" name="rememberMe" lay-skin="primary" title="记住密码">
     </div>
   </div>
   <div class="layui-form-item">
@@ -48,9 +48,11 @@ img{
   </div>
  </form>
  <div>${error }</div>
+ 
 <script src="static/layui-v2.4.5/layui/layui.js"></script>
 <script>
-layui.use(['jquery'], function(){
+layui.use(['jquery','form'], function(){
+	  var form = layui.form;
 	  var $=layui.$;
 	  var href = $("#captchaImg").attr("src");
 	  $("#captchaImg").click(function(e){
