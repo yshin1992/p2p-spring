@@ -8,7 +8,6 @@ import javax.persistence.Query;
 
 import org.dao.hibernate.system.ApplicationDao;
 import org.domain.system.Application;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 @Repository("applicationDao")

@@ -6,7 +6,6 @@ import javax.persistence.Query;
 
 import org.dao.hibernate.system.UserDao;
 import org.domain.system.User;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 @Repository("userDao")

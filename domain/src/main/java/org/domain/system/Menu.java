@@ -14,7 +14,7 @@ import org.annotation.MenuEx;
 public class Menu extends URLLink {
 
 	private static final long serialVersionUID = 6264996585971216670L;
-
+	
 	@Override
 	public List<Resource> getChilds() {
 		List<Resource> resources=super.getChilds();

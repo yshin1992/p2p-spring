@@ -19,14 +19,14 @@ import org.hibernate.annotations.GenericGenerator;
 @Table(name="sys_permission")
 @Inheritance(strategy=InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "permissionType", discriminatorType = DiscriminatorType.STRING)
-public class Permission extends StaticEntity {
+public abstract class Permission extends StaticEntity {
 
 	private static final long serialVersionUID = -5198803289048885459L;
 
 	@Id
-	@Column(length=32)
 	@GenericGenerator(name="systemUUID",strategy="uuid")
-	@GeneratedValue(generator="uuid")
+	@GeneratedValue(generator="systemUUID")
+	@Column(length=32)
 	private String permissionId;
 	
 	@ManyToOne(optional=false)//optional 属性实际上指定关联类与被关联类的join 查询关系，如optional=false 时join 查询关系为inner join, optional=true 时join 查询关系为left join
