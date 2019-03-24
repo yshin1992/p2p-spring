@@ -1,5 +1,7 @@
 package org.background.shiro;
 
+import java.util.List;
+
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
@@ -13,7 +15,10 @@ import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.subject.Subject;
 import org.apache.shiro.util.ByteSource;
+import org.business.system.PermissionService;
 import org.business.system.UserService;
+import org.domain.system.Application;
+import org.domain.system.Menu;
 import org.domain.system.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,6 +41,9 @@ public class CustomerRealm extends AuthorizingRealm {
 	
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private PermissionService permissionService;
 	
 	public CustomerRealm(){
 		super();
@@ -79,6 +87,14 @@ public class CustomerRealm extends AuthorizingRealm {
 		Subject curUser = SecurityUtils.getSubject();
 		System.out.println(curUser.getSession().getAttribute("curUser"));
 		curUser.getSession().setAttribute("curUser", user);
+		
+		List<Application> apps = permissionService.findAppByUser(user.getUserCd(), user.getIsAdmin()==1);
+		logger.error("用户拥有的App权限 : {}",apps);
+		curUser.getSession().setAttribute("apps", apps);
+		curUser.getSession().setAttribute("curApp",apps.get(0));
+		List<Menu> menus = permissionService.findMenuByUser(apps.get(0).getAppCd(), user.getUserCd(), null, user.getIsAdmin()==1);
+		curUser.getSession().setAttribute("menus", menus);
+		logger.error("用户拥有的菜单权限: {}",menus);
 		logger.error("生成认证信息...");
 		return new SimpleAuthenticationInfo(username,user.getPassword(),ByteSource.Util.bytes(user.getUserCd()),getName());
 	}

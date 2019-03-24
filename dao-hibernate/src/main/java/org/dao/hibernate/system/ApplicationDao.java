@@ -1,5 +1,7 @@
 package org.dao.hibernate.system;
 
+import java.util.List;
+
 import org.domain.system.Application;
 
 public interface ApplicationDao {
@@ -10,4 +12,7 @@ public interface ApplicationDao {
 	
 	public Application findByAppCd(String appCd);
 	
+	public List<Application> findByUser(String userCd);
+	
+	public List<Application> findAll();
 }

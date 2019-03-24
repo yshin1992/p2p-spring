@@ -5,6 +5,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 
 import org.dao.hibernate.system.ApplicationDao;
 import org.domain.system.Application;
@@ -34,6 +35,17 @@ public class ApplicationDaoImpl implements ApplicationDao{
 		query.setParameter("appCd", appCd);
 		List<?> resultList = query.getResultList();
 		return resultList.size()>0?(Application)resultList.get(0):null;
+	}
+
+	@Override
+	public List<Application> findByUser(String userCd) {
+		return null;
+	}
+
+	@Override
+	public List<Application> findAll() {
+		TypedQuery<Application> query = entityManager.createQuery("from Application order by listSort asc",Application.class);
+		return query.getResultList();
 	}
 
 }
