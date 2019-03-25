@@ -5,10 +5,13 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>后台管理系统</title>
-<link href="${webRoot }/static/layui-v2.4.5/layui/css/layui.css" type="text/css">
-<script type="text/javascript" src="${webRoot }/static/layui-v2.4.5/layui/layui.js"></script>
 </head>
-<body>
+<frameset rows="60px,*" border="none">
+	<frame src="${webRoot }/header" noresize="noresize" scrolling="no"/>
+	<frameset cols="160px,*">
+		<frame src="${webRoot }/left" name="left" noresize="noresize" scrolling="no"/>
+		<frame src="${webRoot }/main" name="main"/>
+	</frameset>
+</frameset>
 
-</body>
 </html>

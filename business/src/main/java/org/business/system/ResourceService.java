@@ -9,4 +9,5 @@ public interface ResourceService {
 
 	public void save(List<Resource> resources,Application app);
 	
+	public Resource findResourceByCd(String resourceCd);
 }

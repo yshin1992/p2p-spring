@@ -82,4 +82,9 @@ public class ResourceServiceImpl implements ResourceService {
 		return false;
 	}
 
+	@Override
+	public Resource findResourceByCd(String resourceCd) {
+		return resourceDao.findByCd(resourceCd);
+	}
+
 }

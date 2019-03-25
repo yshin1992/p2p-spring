@@ -21,8 +21,9 @@ public class MenuDaoImpl implements MenuDao {
 	public List<Menu> queryAll(String appCd, String resourcePcd) {
 		StringBuilder hql = new StringBuilder("from Menu m where m.appCd=:appCd ");
 		if(!StringUtils.isEmpty(resourcePcd)){
-			hql.append(" and m.parent!=null and a.parent.resourceCd=:resourcePcd");
+			hql.append(" and m.parent!=null and m.parent.resourceCd=:resourcePcd");
 		}
+		hql.append(" order by listSort asc");
 		TypedQuery<Menu> query = entityManager.createQuery(hql.toString(), Menu.class);
 		query.setParameter("appCd", appCd);
 		if(!StringUtils.isEmpty(resourcePcd)){
