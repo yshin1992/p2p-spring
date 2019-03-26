@@ -19,9 +19,11 @@ body{
 <c:forEach items="${resources }" var="res" varStatus="s">
 	 <li class="layui-nav-item">
 		<a href="javascript:;">${res.resourceNm }</a>
+		<dl class="layui-nav-child">
 		<c:forEach items="${res.childs }" var="cres" varStatus="cs">
-			<dl class="layui-nav-child"><a href="${webRoot }${cres.resourceLink}">${cres.resourceNm }</a></dl>
+			<dd><a href="${webRoot }${cres.resourceLink}" target="main">${cres.resourceNm }</a></dd>
 		</c:forEach>
+		</dl>
 		</li>
 </c:forEach>
 </ul>

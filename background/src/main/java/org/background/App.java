@@ -12,7 +12,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
  */
 @SpringBootApplication
 //@Import(value={ShiroConfig.class})//可以将这些配置文件放入扫描包内，可以达到同样的效果
-@ComponentScan(basePackages={"org.dao.hibernate","org.business","org.background.controller","org.background.config","org.background.listener"})
+@ComponentScan(basePackages={"org.dao.hibernate","org.business","org.background"})
 //@EnableJpaRepositories(basePackages={"org.domain"})
 @EntityScan(basePackages={"org.domain"})
 @EnableTransactionManagement//开启事务支持
