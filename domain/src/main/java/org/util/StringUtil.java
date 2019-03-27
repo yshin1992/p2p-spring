@@ -3,7 +3,20 @@ package org.util;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+
 public class StringUtil {
+	
+	public static ObjectMapper mapper = new ObjectMapper();
+	
+	 static
+	 {
+	    mapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
+	    mapper.disable(DeserializationFeature.FAIL_ON_IGNORED_PROPERTIES);
+	    mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, Boolean.TRUE.booleanValue());
+	  }
 	
 	public static String getMD5(String str){
 		MessageDigest digest;

@@ -7,8 +7,13 @@ import pagination.PageResponse;
 
 public interface ItemTypeDao {
 
-	public void save(ItemType itemType);
+	public void saveOrUpdate(ItemType itemType);
 	
 	public PageResponse<ItemType> queryAll(PageRequest pageRequest,ItemType itemType);
 	
+	public ItemType queryById(String id);
+	
+	public String getCategoryMaxCd(String feeType);
+	
+	public void deleteById(String id);
 }

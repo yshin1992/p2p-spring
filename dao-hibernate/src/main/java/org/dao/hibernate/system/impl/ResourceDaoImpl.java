@@ -41,20 +41,22 @@ public class ResourceDaoImpl implements ResourceDao {
 
 	@Override
 	public void update(Resource resource) {
-		entityManager.merge(resource);
+		Resource res = entityManager.find(Resource.class, resource.getId());
+		BeanUtils.copyProperties(resource, res);
+		entityManager.merge(res);
 		entityManager.flush();
+		resource=res;
 	}
 
 	@Override
 	public void saveOrUpdate(Resource resource) {
-		Resource resourceFind = this.findByCd(resource.getResourceCd());
-		if(null != resourceFind){
-			BeanUtils.copyProperties(resource, resourceFind,new String[]{"resourceId","state","createTime","effTime","expTime","createBy"});
-			entityManager.merge(resourceFind);
-		}else{
-			entityManager.persist(resource);
+		Resource oRes=findByCd(resource.getResourceCd());
+		if(oRes!=null){
+			BeanUtils.copyProperties(resource,oRes,new String[]{"resourceId","id","state","createTime","effTime","expTime","createBy"});//修改时不修改状态
+			update(oRes);
+		}else {
+			save(resource);
 		}
-		entityManager.flush();
 		
 	}
 

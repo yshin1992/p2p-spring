@@ -1,6 +1,7 @@
 package org.domain.product;
 
 import java.math.BigDecimal;
+import java.text.DecimalFormat;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -381,5 +382,15 @@ private static final long serialVersionUID = 4185505904034918759L;
 
 	public void setCalOnlineFlag(Integer calOnlineFlag) {
 		this.calOnlineFlag = calOnlineFlag;
+	}
+	
+	public String getPeriodOrDayDesc(){
+		return this.periodOrDay == null || this.periodOrDay==0?"否":"是";
+	}
+	public String getMinAmountDesc(){
+		return this.minAmount == null ? "不限":new DecimalFormat("#.##").format(this.minAmount);
+	}
+	public String getMaxAmountDesc(){
+		return this.maxAmount == null ? "不限":new DecimalFormat("#.##").format(this.maxAmount);
 	}
 }

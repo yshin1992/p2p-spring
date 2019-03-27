@@ -11,43 +11,61 @@ import java.util.List;
  */
 public class PageResponse<T> {
 
-	private List<T> resultList= new ArrayList<T>();
+	private List<T> data = new ArrayList<T>();
 	
-	private Long totalCount = 0L;
+	private String msg = "";
 	
-	private final PageRequest pageRequest;
+	private Long count = 0L;
 	
-	public PageResponse(PageRequest pageRequest){
-		this.pageRequest = pageRequest;
+	private Integer code = 0;
+
+	private final PageRequest request;
+	
+	public PageResponse(PageRequest request){
+		this.request =request;
+	}
+	
+	public List<T> getData() {
+		return data;
 	}
 
-	public List<T> getResultList() {
-		return resultList;
+	public void setData(List<T> data) {
+		this.data = data;
 	}
 
-	public void setResultList(List<T> resultList) {
-		this.resultList = resultList;
+	public String getMsg() {
+		return msg;
 	}
 
-	public Long getTotalCount() {
-		return totalCount;
+	public void setMsg(String msg) {
+		this.msg = msg;
 	}
 
-	public void setTotalCount(Long totalCount) {
-		this.totalCount = totalCount;
+	public Long getCount() {
+		return count;
+	}
+
+	public void setCount(Long count) {
+		this.count = count;
+	}
+
+	public Integer getCode() {
+		return code;
+	}
+
+	public void setCode(Integer code) {
+		this.code = code;
 	}
 	
-	public Long getTotalPage(){
-		return this.totalCount%this.pageRequest.getPageSize() == 0 ? this.totalCount/this.pageRequest.getPageSize()
-				: (this.totalCount/this.pageRequest.getPageSize()+1);
+	public Integer getPage(){
+		return this.request.getPage();
 	}
 	
-	public Integer getPageSize(){
-		return this.pageRequest.getPageSize();
+	public Integer getFirstResultNo(){
+		return this.request.getFirstResultNo();
 	}
 	
-	public Integer getCurrentPage(){
-		return this.pageRequest.getCurrentPage();
+	public Integer getLimit(){
+		return this.request.getLimit();
 	}
-	
 }

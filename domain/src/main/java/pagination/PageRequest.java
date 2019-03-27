@@ -12,9 +12,9 @@ public class PageRequest {
 	
 	public static final Integer DEFAULT_PAGESIZE = 10;
 	
-	private Integer currentPage = CURRENT_PAGE;
+	private Integer page = CURRENT_PAGE;
 	
-	private Integer pageSize = DEFAULT_PAGESIZE;
+	private Integer limit = DEFAULT_PAGESIZE;
 	
 	/**
 	 * 根据某个域进行排序
@@ -24,25 +24,25 @@ public class PageRequest {
 	public PageRequest(){
 	}
 	
-	public PageRequest(Integer currentPage,Integer pageSize){
-		this.currentPage= currentPage;
-		this.pageSize = pageSize;
+	public PageRequest(Integer page,Integer limit){
+		this.page= page;
+		this.limit = limit;
 	}
 	
-	public Integer getCurrentPage() {
-		return currentPage;
+	public Integer getPage() {
+		return page;
 	}
 
-	public void setCurrentPage(Integer currentPage) {
-		this.currentPage = currentPage == null || currentPage < 0? CURRENT_PAGE : currentPage;
+	public void setPage(Integer page) {
+		this.page = page == null || page < 0? CURRENT_PAGE : page;
 	}
 
-	public Integer getPageSize() {
-		return pageSize;
+	public Integer getLimit() {
+		return limit;
 	}
 
-	public void setPageSize(Integer pageSize) {
-		this.pageSize = pageSize == null || pageSize < 0 ? DEFAULT_PAGESIZE : pageSize;
+	public void setLimit(Integer limit) {
+		this.limit = limit == null || limit < 0 ? DEFAULT_PAGESIZE : limit;
 	}
 
 	public String getOrderField() {
@@ -58,7 +58,7 @@ public class PageRequest {
 	 * @return
 	 */
 	public Integer getFirstResultNo(){
-		return (this.currentPage -1) * this.pageSize;
+		return (this.page -1) * this.limit;
 	}
 	
 	

@@ -7,8 +7,11 @@ import pagination.PageResponse;
 
 public interface ItemTypeService {
 	
-	public void save(ItemType itemType);
+	public void saveOrUpdate(ItemType itemType);
 	
 	public PageResponse<ItemType> queryAll(PageRequest request,ItemType itemType);
 	
+	public ItemType queryById(String itemTypeId);
+	
+	public void deleteItemTypes(String... ids);
 }

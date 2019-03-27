@@ -20,8 +20,8 @@ body {
 			<div class="layui-inline">
 				<label class="layui-form-label">搜索</label>
 				<div class="layui-input-inline">
-					<input type="text" name="itemTypeNm" autocomplete="off"
-						class="layui-input" placeholder="费用名称">
+					<input type="text" name="templateNm" autocomplete="off"
+						class="layui-input" placeholder="模板名称">
 				</div>
 				<button class="layui-btn" lay-submit="" lay-filter="typelist" id="query">查询</button>
 			</div>
@@ -47,37 +47,24 @@ body {
 			table.render({
 				id:'dataTable',
 				elem : '#content',
-				url : '${webRoot}/itemtypelist/data',
+				url : '${webRoot}/itemTemplateList/data',
 				cols : [ [ {
-					type : 'checkbox',
-					field : 'id'
+					type : 'checkbox'
 				}, {
-					field : 'itemTypeNm',
-					title : '费用项目名称'
+					field : 'templateNm',
+					title : '模板名称'
 				}, {
-					field : 'billerName',
-					title : '付款方'
+					field : 'itemTypesNm',
+					title : '模板费用项'
+				},  {
+					field : 'createBy',
+					title : '创建人'
 				}, {
-					field : 'chargerName',
-					title : '收款方'
+					field : 'createTimeStr',
+					title : '创建时间',
 				}, {
-					field : 'nodeName',
-					title : '费用节点'
-				}, {
-					field : 'rateReference',
-					title : '费率参考',
-				}, {
-					field : 'rate',
-					title : '付费费率(%)'
-				}, {
-					field : 'periodOrDayDesc',
-					title : '是否关联期数或天数'
-				}, {
-					field : 'maxAmountDesc',
-					title : '上限(元)'
-				}, {
-					field : 'minAmountDesc',
-					title : '下限(元)'
+					field : 'defaultFlagStr',
+					title : '是否默认'
 				} ] ],
 				page : true
 			});
@@ -85,7 +72,7 @@ body {
 			$("#query").click(function(){
 				table.reload('dataTable',{
 					where:{
-						"itemTypeNm":$('input[name="itemTypeNm"]').val()
+						"templateNm":$('input[name="templateNm"]').val()
 					},page:{
 						page:1
 					}
