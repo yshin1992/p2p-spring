@@ -28,7 +28,7 @@ body {
 		</div>
 	</div>
 	<div class="layui-inline">
-		<a class="layui-btn" href="${webRoot}/itemtypeedit">新增</a>
+		<a class="layui-btn" href="${webRoot}/itemTemplateEdit">新增</a>
 		<button class="layui-btn" id="del">删除</button>
 		<button class="layui-btn" id="edit">编辑</button>
 	</div>
