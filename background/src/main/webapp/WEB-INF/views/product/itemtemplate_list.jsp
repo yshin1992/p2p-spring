@@ -87,8 +87,8 @@ body {
 						title: '提示',content: '只能选择一项进行编辑'
 					});   
 				}else{
-					var itemTypeId = datas[0].itemTypeId;
-					$(location).attr('href', '${webRoot}/itemtypeedit?itemTypeId='+itemTypeId);
+					var templateId = datas[0].templateId;
+					$(location).attr('href', '${webRoot}/itemTemplateEdit?templateId='+templateId);
 				}
 			});
 			

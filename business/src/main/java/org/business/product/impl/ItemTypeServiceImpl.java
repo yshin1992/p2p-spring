@@ -1,5 +1,8 @@
 package org.business.product.impl;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.transaction.Transactional;
 
 import org.business.product.ItemTypeService;
@@ -42,6 +45,21 @@ public class ItemTypeServiceImpl implements ItemTypeService {
 				itemTypeDao.deleteById(id);
 			}
 		}
+	}
+
+	@Override
+	public List<ItemType> queryByIds(String[] ids) {
+		if(null ==ids || ids.length ==0)
+			return null;
+		List<ItemType> items = new ArrayList<ItemType>();
+		for(String id:ids){
+			ItemType itemType = this.queryById(id);
+			if(null == itemType){
+				throw new RuntimeException("非法的ItemType [id:"+id+"]");
+			}
+			items.add(itemType);
+		}
+		return items;
 	}
 
 }

@@ -25,4 +25,11 @@ public interface PermissionService {
 	 */
 	public List<Application> findAppByUser(String userCd,boolean isAdmin);
 	
+	/**
+	 * 根据用户编码查询用户拥有的权限编码
+	 * @param userCd
+	 * @return
+	 */
+	List<String> queryPermissionsByUser(String userCd);
+	
 }

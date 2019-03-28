@@ -1,5 +1,7 @@
 package org.business.product;
 
+import java.util.List;
+
 import org.domain.product.ItemType;
 
 import pagination.PageRequest;
@@ -14,4 +16,6 @@ public interface ItemTypeService {
 	public ItemType queryById(String itemTypeId);
 	
 	public void deleteItemTypes(String... ids);
+	
+	public List<ItemType> queryByIds(String[] ids);
 }

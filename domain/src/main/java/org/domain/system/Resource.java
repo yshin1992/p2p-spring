@@ -21,6 +21,7 @@ import javax.persistence.Transient;
 
 import org.domain.StaticEntity;
 import org.hibernate.annotations.GenericGenerator;
+import org.vo.TreeNodeDto;
 
 @Entity
 @Table(name="sys_resource")
@@ -206,4 +207,31 @@ public abstract class Resource extends StaticEntity{
 		this.appCd = appCd;
 	}
 	
+	/**
+	 *把资源节点转换为树节点,状态是否选中取决于isEnabled属性
+	 **/
+	public TreeNodeDto geTreeNode(){
+		return new TreeNodeDto(getId(), getPid(), getResourceCd(), getResourceNm(), isEnabled());
+	}
+	
+	/**
+	 *把资源节点转换为树节点,状态是否选中取决于传入的checked参数
+	 **/
+	public TreeNodeDto geTreeNode(boolean checked){
+		return new TreeNodeDto(getId(), getPid(), getResourceCd(), getResourceNm(), checked);
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == null)
+			return false;
+		Resource r = (Resource) obj;
+		return (this.getResourceCd().equals(r.getResourceCd()))
+				&& (this.getApp().equals(r.getApp()));
+	}
+
+	@Override
+	public int hashCode() {
+		return (this.getApp() + this.getResourceCd()).hashCode();
+	}
 }

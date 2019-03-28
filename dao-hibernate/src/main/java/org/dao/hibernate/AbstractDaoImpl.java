@@ -151,4 +151,11 @@ public class AbstractDaoImpl<T extends AbstractEntity> implements AbstractDao<T>
 		entityManager.flush();
 	}
 
+	@Override
+	public void delete(Object id) {
+		T find = entityManager.find(entityClass, id);
+		entityManager.remove(find);
+		entityManager.flush();
+	}
+
 }

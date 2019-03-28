@@ -1,5 +1,6 @@
 package org.business.system.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.LinkedBlockingQueue;
 
@@ -8,14 +9,17 @@ import javax.transaction.Transactional;
 import org.apache.commons.lang3.StringUtils;
 import org.business.system.ResourceService;
 import org.dao.hibernate.system.ApplicationDao;
+import org.dao.hibernate.system.PermissionDao;
 import org.dao.hibernate.system.ResourceDao;
 import org.domain.system.Application;
+import org.domain.system.Permission;
 import org.domain.system.Resource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
+
 
 @Service("resourceService")
 public class ResourceServiceImpl implements ResourceService {
@@ -27,6 +31,9 @@ public class ResourceServiceImpl implements ResourceService {
 	
 	@Autowired
 	private ApplicationDao applicationDao;
+	
+	@Autowired
+	private PermissionDao permissionDao;
 	
 	@Transactional
 	@Override
@@ -85,6 +92,21 @@ public class ResourceServiceImpl implements ResourceService {
 	@Override
 	public Resource findResourceByCd(String resourceCd) {
 		return resourceDao.findByCd(resourceCd);
+	}
+
+	@Override
+	public List<Resource> findAll() {
+		return resourceDao.findAll();
+	}
+
+	@Override
+	public List<Resource> findByRoleId(String roleId) {
+		List<Permission> permissions = permissionDao.findByRoleId(roleId);
+		List<Resource> resources=new ArrayList<Resource>();
+		for (Permission permission : permissions) {
+			resources.add(permission.getResource());
+		}
+		return resources;
 	}
 
 }

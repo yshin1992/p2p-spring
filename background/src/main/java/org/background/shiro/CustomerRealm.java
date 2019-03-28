@@ -1,5 +1,6 @@
 package org.background.shiro;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.apache.shiro.SecurityUtils;
@@ -62,9 +63,15 @@ public class CustomerRealm extends AuthorizingRealm {
 	 */
 	@Override
 	protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
-		
-		
-		return new SimpleAuthorizationInfo();
+		String userCd = (String) super.getAvailablePrincipal(principals);
+		if(null == userCd){
+			return null;
+		}
+		List<String> permissions = permissionService.queryPermissionsByUser(userCd);
+		SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
+		info.addStringPermissions(permissions);
+		logger.error("用户拥有的权限：{}",Arrays.toString(permissions.toArray(new String[]{})));
+		return info;
 	}
 
 	/**

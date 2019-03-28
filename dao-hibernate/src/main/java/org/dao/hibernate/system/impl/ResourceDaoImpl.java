@@ -1,5 +1,6 @@
 package org.dao.hibernate.system.impl;
 
+import java.util.Arrays;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -58,6 +59,17 @@ public class ResourceDaoImpl implements ResourceDao {
 			save(resource);
 		}
 		
+	}
+
+	@Override
+	public List<Resource> findByIds(String[] ids) {
+		if(ids == null || ids.length == 0){
+			return null;
+		}
+		StringBuilder HQL = new StringBuilder("from Resource where state='F0A' and resourceId in (:ids)");
+		TypedQuery<Resource> query = entityManager.createQuery(HQL.toString(), Resource.class);
+		query.setParameter("ids", Arrays.asList(ids));
+		return query.getResultList();
 	}
 
 }

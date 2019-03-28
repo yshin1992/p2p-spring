@@ -139,6 +139,30 @@ public class Application extends StaticEntity {
 	}
 
 	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((appCd == null) ? 0 : appCd.hashCode());
+		return result;
+	}
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Application other = (Application) obj;
+		if (appCd == null) {
+			if (other.appCd != null)
+				return false;
+		} else if (!appCd.equals(other.appCd))
+			return false;
+		return true;
+	}
+	
+	@Override
 	public String toString() {
 		return "Application [appId=" + appId + ", appCd=" + appCd
 				+ ", appName=" + appName + ", appDesc=" + appDesc + ", host="

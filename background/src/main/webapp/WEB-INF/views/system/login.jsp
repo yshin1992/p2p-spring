@@ -10,10 +10,21 @@
 img{
 	height:30px;
 }
+.center{
+	width:400px;
+	margin:0 auto;
+	padding:auto;
+}
+.center h1{
+	text-align:center;
+	color:blue;
+}
 </style>
 </head>
 <body>
 
+<div class="center">
+<h1>后台管理系统</h1>
 <form class="layui-form" action="${webRoot }/login" method="post">
   <div class="layui-form-item">
     <label class="layui-form-label">用户名</label>
@@ -48,7 +59,7 @@ img{
   </div>
  </form>
  <div>${error }</div>
- 
+ </div>
 <script src="static/layui-v2.4.5/layui/layui.js"></script>
 <script>
 layui.use(['jquery','form'], function(){

@@ -15,4 +15,6 @@ public interface ResourceDao {
 	public void update(Resource resource);
 	
 	public void saveOrUpdate(Resource resource);
+	
+	public List<Resource> findByIds(String[] ids);
 }

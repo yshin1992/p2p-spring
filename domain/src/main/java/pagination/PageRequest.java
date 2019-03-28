@@ -60,6 +60,11 @@ public class PageRequest {
 	public Integer getFirstResultNo(){
 		return (this.page -1) * this.limit;
 	}
-	
+
+	@Override
+	public String toString() {
+		return "PageRequest [page=" + page + ", limit=" + limit
+				+ ", orderField=" + orderField + "]";
+	}
 	
 }

@@ -34,7 +34,6 @@ public abstract class AbstractEntity implements Serializable{
 	@Column(name="createTime")
 	private Date createTime=new Date();
 	
-	@JsonIgnore
 	@Column(name="createBy",length=32)
 	private String createBy = DEFAULTCREATEBY;
 	
@@ -87,7 +86,6 @@ public abstract class AbstractEntity implements Serializable{
 	public abstract String getId();
 	
 	@Transient
-	@JsonIgnore
 	public String getCreateTimeStr(){
 		if(null ==  createTime)
 			return "";

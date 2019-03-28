@@ -84,4 +84,10 @@ public class AbstractServiceImpl<T extends AbstractEntity> implements AbstractSe
 		abstractDao.saveOrUpdate(t);
 	}
 
+	@Transactional
+	@Override
+	public void delete(Object id) {
+		abstractDao.delete(id);
+	}
+
 }

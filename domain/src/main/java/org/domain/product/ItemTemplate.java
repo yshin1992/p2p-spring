@@ -87,6 +87,22 @@ public class ItemTemplate extends AbstractEntity {
 		return this.defaultFlag ? "是":"否";
 	}
 	
+	public String getItemTypesId(){
+		if (itemTypes != null) {
+			StringBuilder sb = new StringBuilder();
+			for (ItemType type : itemTypes) {
+				sb.append(",").append(type.getItemTypeId());
+			}
+			if (sb.length() > 0) {
+				return sb.substring(1);
+			} else {
+				return "";
+			}
+		} else {
+			return "";
+		}
+	}
+	
 	public String getItemTypesNm() {
 		if (itemTypes != null) {
 			StringBuilder sb = new StringBuilder();

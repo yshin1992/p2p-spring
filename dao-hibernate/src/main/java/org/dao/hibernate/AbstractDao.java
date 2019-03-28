@@ -33,4 +33,6 @@ public interface AbstractDao<T extends AbstractEntity> {
 	T findSingleResultByHQL(String HQL);
 	
 	void saveOrUpdate(T t);
+	
+	void delete(Object id);
 }

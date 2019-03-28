@@ -5,6 +5,7 @@ import java.util.List;
 import org.annotation.FunctionEx;
 import org.annotation.MenuEx;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.business.product.ItemTypeService;
 import org.business.util.CacheUtil;
 import org.domain.product.ItemType;
@@ -35,6 +36,7 @@ public class ItemTypeController {
 	 * @param itemType
 	 * @return
 	 */
+	@RequiresPermissions("p2p.product.itemtype.list")
 	@MenuEx(code = "p2p.product.itemtype.list",name = "费用设置", parentCd = "p2p.system.profile", listSort = 10)
 	@RequestMapping("/itemtypelist")
 	public String templateList(PageRequest request,ItemType itemType){
@@ -47,6 +49,7 @@ public class ItemTypeController {
 	 * @param itemType
 	 * @return
 	 */
+	@RequiresPermissions("p2p.product.itemtype.list")
 	@ResponseBody
 	@RequestMapping("/itemtypelist/data")
 	public PageResponse<ItemType> queryItemTypeList(PageRequest request,ItemType itemType){
@@ -54,6 +57,7 @@ public class ItemTypeController {
 		return itemTypeService.queryAll(request, itemType);
 	}
 	
+	@RequiresPermissions("p2p.product.itemtype.init")
 	@FunctionEx(code = "p2p.product.itemtype.init", name = "新增费用设置", parentCd = "p2p.product.itemtype.list")
 	@RequestMapping(value="/itemtypeedit",method=RequestMethod.GET)
 	public ModelAndView itemTypeEdit(String itemTypeId){
@@ -71,6 +75,7 @@ public class ItemTypeController {
 		return mv;
 	}
 	
+	@RequiresPermissions("p2p.product.itemtype.save")
 	@FunctionEx(code = "p2p.product.itemtype.save", name = "保存费用设置", parentCd = "p2p.product.itemtype.list")
 	@RequestMapping(value="/itemtypesave")
 	public String itemTypeSave(ItemType itemType){
@@ -78,6 +83,7 @@ public class ItemTypeController {
 		return "product/itemtype_list";
 	}
 	
+	@RequiresPermissions("p2p.product.itemtype.delete")
 	@FunctionEx(code = "p2p.product.itemtype.delete", name = "删除费用设置", parentCd = "p2p.product.itemtype.list")
 	@RequestMapping(value="/itemtypedelete")
 	public String itemTypeDelete(String[] ids){

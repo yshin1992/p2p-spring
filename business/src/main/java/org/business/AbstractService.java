@@ -34,4 +34,6 @@ public interface AbstractService<T extends AbstractEntity> {
 	
 	void saveOrUpdate(T t);
 	
+	public void delete(Object id);
+	
 }

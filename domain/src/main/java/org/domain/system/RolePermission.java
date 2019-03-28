@@ -15,6 +15,7 @@ public class RolePermission extends Permission{
 	@JoinColumn(name="roleId")
 	private Role role;
 	
+	public RolePermission(){}
 	public RolePermission(Role role,Resource resource) {
 		super();
 		this.role = role;
