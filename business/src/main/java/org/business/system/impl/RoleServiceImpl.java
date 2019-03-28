@@ -102,4 +102,14 @@ public class RoleServiceImpl extends AbstractServiceImpl<Role> implements RoleSe
 		}
 	}
 
+	@Override
+	public List<Role> queryAll() {
+		return roleDao.queryAll();
+	}
+
+	@Override
+	public List<Role> queryByUserId(String userId) {
+		return null;
+	}
+
 }

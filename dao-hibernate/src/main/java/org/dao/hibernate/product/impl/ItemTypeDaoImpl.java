@@ -27,7 +27,7 @@ public class ItemTypeDaoImpl implements ItemTypeDao {
 		if(null != itemType){
 			//获取节点最大值
 			String maxCd = getCategoryMaxCd(itemType.getFeeType());
-			String itemTypeCd =  itemType.getFeeType() + String.valueOf(Integer.valueOf(maxCd) + 1);
+			String itemTypeCd =  String.valueOf(Integer.valueOf(maxCd) + 1);
 			
 			if(!StringUtils.isEmpty(itemType.getItemTypeId())){
 				ItemType typeFind = entityManager.find(ItemType.class, itemType.getItemTypeId());

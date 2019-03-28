@@ -1,5 +1,7 @@
 package org.business.system;
 
+import java.util.List;
+
 import org.business.AbstractService;
 import org.domain.system.Role;
 
@@ -28,4 +30,8 @@ public interface RoleService extends AbstractService<Role> {
 	 * @param ids
 	 */
 	public void disable(String[] ids);
+	
+	public List<Role> queryAll();
+	
+	public List<Role> queryByUserId(String userId);
 }

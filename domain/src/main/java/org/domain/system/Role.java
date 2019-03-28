@@ -8,6 +8,7 @@ import javax.persistence.Table;
 
 import org.domain.StaticEntity;
 import org.hibernate.annotations.GenericGenerator;
+import org.vo.TreeNodeDto;
 
 @Entity
 @Table(name="sys_role")
@@ -80,5 +81,10 @@ public class Role extends StaticEntity{
 
 	public void setRoleCd(String roleCd) {
 		this.roleCd = roleCd;
+	}
+	
+	/**返回树节点*/
+	public TreeNodeDto geTreeNode(boolean checked){
+		return new TreeNodeDto(getId(), "0",getRoleCd(),getRoleNm(), checked);
 	}
 }

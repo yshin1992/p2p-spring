@@ -1,7 +1,9 @@
 package org.background.service;
 
-import org.business.product.ItemTypeService;
-import org.domain.product.ItemType;
+import org.business.system.RoleService;
+import org.business.system.UserService;
+import org.domain.system.Role;
+import org.domain.system.User;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,24 +18,30 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @ComponentScan(basePackages={"org.dao.hibernate","org.business"})
 @EntityScan(basePackages={"org.domain"})
 @EnableTransactionManagement
-public class ItemTypeServiceTest {
+public class UserServiceTest {
+
+	@Autowired
+	private UserService userService;
 	
 	@Autowired
-	private ItemTypeService itemTypeService;
+	private RoleService roleService;
 	
 	@Test
-	public void testSave(){
-		ItemType itemType = new ItemType();
-		itemType.setItemTypeCd("101");
-		itemType.setItemTypeNm("测试");
-		itemType.setBiller(1);
-		itemType.setCharger(2);
-		itemType.init();
-		itemType.setFeeType("200");
-		itemType.setNode(4);
-		itemType.setRateReferened(6);
-		itemType.setCalOnlineFlag(1);
-		itemTypeService.saveOrUpdate(itemType);
-	
+	public void testAdd(){
+		User user = new User();
+		user.setUserCd("chenpeng");
+		user.setUserNm("陈鹏");
+		user.init();
+		userService.save(user);
 	}
+	
+	@Test
+	public void testRoleAdd(){
+		Role role = new Role();
+		role.setRoleCd("5");
+		role.setRoleNm("测试");
+		role.init();
+		roleService.save(role);
+	}
+	
 }

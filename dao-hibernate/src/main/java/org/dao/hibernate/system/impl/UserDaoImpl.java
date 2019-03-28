@@ -1,31 +1,32 @@
 package org.dao.hibernate.system.impl;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
+import java.util.HashMap;
+import java.util.Map;
 
+import org.dao.hibernate.AbstractDaoImpl;
 import org.dao.hibernate.system.UserDao;
 import org.domain.system.User;
 import org.springframework.stereotype.Repository;
 
-@Repository("userDao")
-public class UserDaoImpl implements UserDao {
+import pagination.PageRequest;
+import pagination.PageResponse;
 
-	@PersistenceContext
-	private EntityManager entityManager;
-	
+@Repository("userDao")
+public class UserDaoImpl extends AbstractDaoImpl<User> implements UserDao {
+
 	@Override
 	public User findByCd(String userCd) {
-		Query query = entityManager.createQuery("from User where userCd=:userCd");
-		query.setParameter("userCd", userCd);
-		return (User) query.getResultList().get(0);
+		String HQL="from User where userCd=:userCd";
+		Map<String,Object> condition = new HashMap<String,Object>();
+		condition.put("userCd", userCd);
+		return findSingleResultByHQL(HQL, condition);
 	}
 
+
 	@Override
-	public void save(User user) {
-		// TODO Auto-generated method stub
-		entityManager.persist(user);
-		entityManager.flush();
+	public PageResponse<User> queryByPage(PageRequest request) {
+		return queryPageByHQL("from User where isAdmin=0 order by listSort desc,createTime desc", new HashMap<String,Object>(), request);
 	}
+
 
 }
