@@ -3,16 +3,23 @@ package org.background.controller.system;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.annotation.FunctionEx;
 import org.annotation.MenuEx;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.business.system.PermissionService;
 import org.business.system.ResourceService;
 import org.business.system.RoleService;
+import org.business.system.SysUserService;
 import org.business.system.UserService;
-import org.domain.system.Resource;
+import org.domain.system.Application;
+import org.domain.system.Menu;
 import org.domain.system.Role;
 import org.domain.system.User;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -21,6 +28,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.ModelAndView;
+import org.vo.ResponseMsg;
 import org.vo.TreeNodeDto;
 
 import pagination.PageRequest;
@@ -29,6 +37,7 @@ import pagination.PageResponse;
 @Controller
 public class UserController {
 
+	private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 	@Autowired
 	private ResourceService resourceService;
 
@@ -37,6 +46,12 @@ public class UserController {
 
 	@Autowired
 	private RoleService roleService;
+	
+	@Autowired
+	private SysUserService sysUserService;
+	
+	@Autowired
+	private PermissionService permissionService;
 
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public String login() {
@@ -61,14 +76,13 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/left")
-	public ModelAndView left(String resourceCd) {
+	public ModelAndView left(String resourceCd,HttpSession session) {
 		ModelAndView mv = new ModelAndView("system/left");
 		if (null != resourceCd) {
-			Resource resource = resourceService.findResourceByCd(resourceCd);
-			if (null != resource) {
-				List<Resource> childs = resource.getChilds();
-				mv.addObject("resources", childs);
-			}
+			Application app = (Application) session.getAttribute("curApp");
+			User user = (User) session.getAttribute("curUser");
+			List<Menu> menus = permissionService.findMenuByUser(app.getAppCd(),user.getUserCd(), resourceCd, user.getIsAdmin() == 1);
+			mv.addObject("resources", menus);
 		}
 		return mv;
 	}
@@ -135,8 +149,27 @@ public class UserController {
 		if(StringUtils.isEmpty(user.getUserId())){
 			user.setUserId(null);
 		}
-		userService.save(user, ids);
+		sysUserService.save(user,ids);
 		return "system/user_list";
 	}
 
+	
+	@RequiresPermissions("p2p.permission.user.disable")
+	@FunctionEx(code="p2p.permission.user.disable",name="禁用用户",parentCd="p2p.permission.user.list")
+	@RequestMapping("/system/userdisable")
+	public @ResponseBody ResponseMsg<String> disableUsers(String ids){
+		logger.error("禁用用户：{}",ids);
+		sysUserService.disable(StringUtils.isEmpty(ids)?null:ids.split(","));
+		return new ResponseMsg<String>();
+	}
+	
+	@RequiresPermissions("p2p.permission.user.enable")
+	@FunctionEx(code="p2p.permission.user.enable",name="启用用户",parentCd="p2p.permission.user.list")
+	@RequestMapping("/system/userenable")
+	public @ResponseBody ResponseMsg<String> enableRoles(String ids){
+		logger.error("启用用户：{}",ids);
+		sysUserService.enable(StringUtils.isEmpty(ids)?null:ids.split(","));
+		return new ResponseMsg<String>();
+	}
+	
 }

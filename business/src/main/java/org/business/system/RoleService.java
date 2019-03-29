@@ -34,4 +34,5 @@ public interface RoleService extends AbstractService<Role> {
 	public List<Role> queryAll();
 	
 	public List<Role> queryByUserId(String userId);
+	
 }

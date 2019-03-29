@@ -5,6 +5,7 @@ import java.util.Date;
 import org.apache.commons.lang3.time.DateUtils;
 import org.apache.shiro.crypto.hash.SimpleHash;
 import org.business.system.UserService;
+import org.dao.hibernate.system.UserDao;
 import org.domain.system.User;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -17,13 +18,16 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-@ComponentScan(basePackages={"org.dao.hibernate"})
+@ComponentScan(basePackages={"org.dao.hibernate","org.business"})
 @EntityScan(basePackages={"org.domain"})
 @EnableTransactionManagement
 public class UserDaoTest {
 	
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private UserDao userDao;
 	
 	@Test
 	public void testUserAdd(){
@@ -35,6 +39,15 @@ public class UserDaoTest {
 		user.setExpTime(DateUtils.addYears(new Date(), 100));
 		user.setUserNm("administrator");
 		user.setEnable(true);
+		userService.save(user);
+	}
+	
+	@Test
+	public void testAdd(){
+		User user = new User();
+		user.setUserCd("xiaoyun3");
+		user.setUserNm("xiaoyun3");
+		user.init();
 		userService.save(user);
 	}
 }

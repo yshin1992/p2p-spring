@@ -11,9 +11,12 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
+import org.apache.shiro.crypto.hash.SimpleHash;
 import org.domain.StaticEntity;
 import org.hibernate.annotations.GenericGenerator;
 import org.util.StringUtil;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name="sys_user")
@@ -144,23 +147,26 @@ public class User extends StaticEntity{
 	@Transient
 	private String password2;
 
+	@JsonIgnore
 	public String getPassword1() {
 		return password1;
 	}
 	/**加密密码*/
 	@Transient
+	@JsonIgnore
 	public String getMD5Password1() {
-		return StringUtil.getMD5(StringUtil.getMD5(password1)+userCd);
+		return new SimpleHash("MD5", password1,userCd,2).toString();
 	}
 	public void setPassword1(String password1) {
 		this.password1 = password1;
 	}
-
+	@JsonIgnore
 	public String getPassword2() {
 		return password2;
 	}
 	/**加密密码*/
 	@Transient
+	@JsonIgnore
 	public String getMD5Password2() {
 		return StringUtil.getMD5(StringUtil.getMD5(password2)+userCd);
 	}

@@ -66,7 +66,7 @@
 					});   
 				}else{
 					var id = datas[0].id;
-					$(location).attr("href","${webRoot}/system/roleEdit?roleId="+id)
+					$(location).attr("href","${webRoot}/system/useredit?userId="+id)
 				}
 			});
 			$("#enable").click(function() {
@@ -86,7 +86,7 @@
 								if(index<datas.length-1)
 									ids+=",";
 							});
-							$.post("${webRoot}/system/roleEnable",{"ids":ids},function(data){
+							$.post("${webRoot}/system/userenable",{"ids":ids},function(data){
 								if(data.code == 200){
 									layer.open({
 										title:"提示",content:"启用角色成功"
@@ -122,7 +122,7 @@
 								if(index<datas.length-1)
 									ids+=",";
 							});
-							$.post("${webRoot}/system/roleDisable",{"ids":ids},function(data){
+							$.post("${webRoot}/system/userdisable",{"ids":ids},function(data){
 								if(data.code == 200){
 									layer.open({
 										title:"提示",content:"禁用角色成功"

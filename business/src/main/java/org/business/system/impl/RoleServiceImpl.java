@@ -34,6 +34,7 @@ public class RoleServiceImpl extends AbstractServiceImpl<Role> implements RoleSe
 	
 	@Autowired
 	private ResourceDao resourceDao;
+	
 	@Override
 	public PageResponse<Role> queryRolesByPage(PageRequest request) {
 		return roleDao.queryRolesByPage(request);
@@ -109,7 +110,8 @@ public class RoleServiceImpl extends AbstractServiceImpl<Role> implements RoleSe
 
 	@Override
 	public List<Role> queryByUserId(String userId) {
-		return null;
+		return roleDao.queryByUserId(userId);
 	}
+
 
 }

@@ -72,4 +72,20 @@ public class ResourceDaoImpl implements ResourceDao {
 		return query.getResultList();
 	}
 
+	@Override
+	public List<Resource> findByUser(String userCd) {
+		StringBuffer sb=new StringBuffer("from Resource a");
+		sb.append(" where a.state='F0A' and now() between a.effTime and a.expTime");
+		sb.append(" and (a.resourceId in");
+		sb.append(" (select c.resource.resourceId from RolePermission c,UserRole d where c.role.id=d.role.id and d.user.userCd=:userCd")
+		  .append("     and c.role.state='F0A' and now() between c.role.effTime and c.role.expTime") //角色有效
+		  .append("     and c.state='F0A' and now() between c.effTime and c.expTime")                //角色资源关系有效
+		  .append("     and d.user.state='F0A' and now() between d.user.effTime and d.user.expTime") //用户有效
+		  .append("     and d.state='F0A' and now() between d.effTime and d.expTime))");              //用户角色关系有效
+		sb.append(" order by a.listSort");
+		TypedQuery<Resource> query = entityManager.createQuery(sb.toString(), Resource.class);
+		query.setParameter("userCd", userCd);
+		return query.getResultList();
+	}
+
 }

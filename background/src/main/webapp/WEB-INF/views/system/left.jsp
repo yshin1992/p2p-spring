@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -21,7 +22,9 @@ body{
 		<a href="javascript:;">${res.resourceNm }</a>
 		<dl class="layui-nav-child">
 		<c:forEach items="${res.childs }" var="cres" varStatus="cs">
-			<dd><a href="${webRoot }${cres.resourceLink}" target="main">${cres.resourceNm }</a></dd>
+			<shiro:hasPermission name="${cres.resourceCd }">
+				<dd><a href="${webRoot }${cres.resourceLink}" target="main">${cres.resourceNm }</a></dd>
+			</shiro:hasPermission>
 		</c:forEach>
 		</dl>
 		</li>

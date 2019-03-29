@@ -11,6 +11,7 @@ import org.dao.hibernate.system.UserDao;
 import org.domain.system.Application;
 import org.domain.system.Menu;
 import org.domain.system.Resource;
+import org.domain.system.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -32,22 +33,19 @@ public class PermissionServiceImpl implements PermissionService {
 	@Override
 	public List<Menu> findMenuByUser(String appCd, String userCd,
 			String resourcePcd, boolean isAdmin) {
-		
-		//TODO根据用户角色去查，这里先查出所有的
-		return menuDao.queryAll(appCd, resourcePcd);
+		return isAdmin?menuDao.queryAll(appCd, resourcePcd) : menuDao.findByUser(userCd, appCd, resourcePcd);
 	}
 
 	@Override
 	public List<Application> findAppByUser(String userCd, boolean isAdmin) {
-		//TODO根据用户角色去查，这里先查出所有的
-		return applicationDao.findAll();
+		return isAdmin?applicationDao.findAll():applicationDao.findByUser(userCd);
 	}
 
 	@Override
 	public List<String> queryPermissionsByUser(String userCd) {
 		List<String> resourceCds = new ArrayList<String>();
-		//后续要添加根据用户编码来做
-		List<Resource> all = resourceDao.findAll();
+		User user = userDao.findByCd(userCd);
+		List<Resource> all = user.getIsAdmin()==1 ? resourceDao.findAll() : resourceDao.findByUser(userCd);
 		if(null != all && all.size()>0){
 			for(Resource m:all){
 				resourceCds.add(m.getResourceCd());

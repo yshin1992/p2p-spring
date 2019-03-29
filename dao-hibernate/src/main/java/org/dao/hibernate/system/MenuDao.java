@@ -14,4 +14,5 @@ public interface MenuDao {
 	 */
 	public List<Menu> queryAll(String appCd,String resourcePcd);
 	
+	public List<Menu> findByUser(String userCd,String appCd,String resourcePCd);
 }

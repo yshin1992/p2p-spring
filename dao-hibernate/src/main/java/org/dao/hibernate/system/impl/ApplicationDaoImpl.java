@@ -39,7 +39,16 @@ public class ApplicationDaoImpl implements ApplicationDao{
 
 	@Override
 	public List<Application> findByUser(String userCd) {
-		return null;
+		StringBuffer sb=new StringBuffer(" from Application a where (a.appId in");
+		sb.append(" (select c.resource.app.appId from RolePermission c,UserRole d where c.role.id=d.role.id and d.user.userCd=:userCd")
+		  .append("     and c.role.state='F0A' and now() between c.role.effTime and c.role.expTime") //角色有效
+		  .append("     and c.state='F0A' and now() between c.effTime and c.expTime")                //角色资源关系有效
+  		  .append("     and d.user.state='F0A' and now() between d.user.effTime and d.user.expTime") //用户有效
+		  .append("     and d.state='F0A' and now() between d.effTime and d.expTime)");              //用户角色关系有效
+		sb.append(") order by a.listSort");
+		TypedQuery<Application> query = entityManager.createQuery(sb.toString(), Application.class);
+		query.setParameter("userCd", userCd);
+		return query.getResultList();
 	}
 
 	@Override
