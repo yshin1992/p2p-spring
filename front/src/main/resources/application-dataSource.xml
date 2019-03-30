@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xmlns:context="http://www.springframework.org/schema/context"
+	   xmlns:aop="http://www.springframework.org/schema/aop"
+	   xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+				           http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+				           http://www.springframework.org/schema/aop  http://www.springframework.org/schema/aop/spring-aop.xsd
+				           http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
+				           http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
+	
+	<context:property-placeholder location="classpath:db.properties"/>
+				          
+	<!-- 图形验证码 -->
+	<bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource">
+		<property name="driverClassName"><value>${driverClassName}</value></property>
+		<property name="url"><value>${url}</value></property>
+		<property name="username"><value>${username}</value></property>
+		<property name="password"><value>${password}</value></property>
+		<property name="filters"><value>${filters}</value></property>
+		<property name="maxActive"><value>${maxActive}</value></property>
+		<property name="initialSize"><value>${initialSize}</value></property>
+		
+		<property name="maxIdle" ><value>${maxIdle}</value></property>
+        <property name="maxOpenPreparedStatements"><value>${maxOpenPreparedStatements}</value></property>
+        <property name="maxWait"><value>${maxWait}</value></property>
+        <property name="minEvictableIdleTimeMillis"><value>${minEvictableIdleTimeMillis}</value></property>
+        <property name="minIdle"><value>${minIdle}</value></property>
+        <property name="poolPreparedStatements" ><value>${poolPreparedStatements}</value></property>
+	</bean>	
+	
+	<bean id="sqlSessionFactory"
+          class="org.mybatis.spring.SqlSessionFactoryBean">
+          <property name="configLocation" value="classpath:mybatis-config/mybatis-config.xml" /> 
+          <property name="dataSource" ref="dataSource"/>
+          <property name="mapperLocations">
+           <list>
+            <value>classpath:mybatis-config/mapper/*/*.xml</value>
+           </list>
+          </property>
+    </bean>
+    
+    <bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">    
+      <constructor-arg index="0" ref="sqlSessionFactory" />      
+    </bean>
+</beans>

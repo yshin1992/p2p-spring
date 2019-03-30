@@ -82,5 +82,7 @@
     <module>dao-mybatis</module>
     <module>shiro-servlet</module>
     <module>shiro-spring</module>
+    <module>front</module>
+    <module>apis</module>
   </modules>
 </project>
