@@ -4,6 +4,8 @@ import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRegistration.Dynamic;
 
+import org.apis.config.CacheConfig;
+import org.apis.config.ContextConfig;
 import org.apis.config.DataSourceConfig;
 import org.apis.config.WebMVCConfig;
 import org.slf4j.Logger;
@@ -29,8 +31,14 @@ public class WebInitializer implements WebApplicationInitializer {
 			throws ServletException {
 		logger.error("系统开始启动...");
 		
+		//注册log4j日志管理
+		servletContext.addListener(new Log4jConfigListener());
+		servletContext.setInitParameter("log4jConfigLocation", "classpath:log4j.xml");
+		
+		servletContext.setInitParameter("webAppRootKey", "Apis");
+		
 		AnnotationConfigWebApplicationContext ctx = new AnnotationConfigWebApplicationContext();
-		ctx.register(WebMVCConfig.class,DataSourceConfig.class);
+		ctx.register(WebMVCConfig.class,DataSourceConfig.class,ContextConfig.class,CacheConfig.class);
 		
 		//添加字符串编码过滤器
 		servletContext.addFilter("characterEncodingFilter", new CharacterEncodingFilter("UTF-8", true));
@@ -40,8 +48,7 @@ public class WebInitializer implements WebApplicationInitializer {
 		dispatcherServlet.addMapping("/");
 		dispatcherServlet.setLoadOnStartup(1);
 		
-		//注册log4j日志管理
-		servletContext.addListener(new Log4jConfigListener());
+		
 		
 		logger.error("系统启动完成...");
 	}

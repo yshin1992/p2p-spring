@@ -23,6 +23,12 @@
 
 	<dependencies>
 		<dependency>
+			<groupId>com.njmcxr.p2p</groupId>
+			<artifactId>domain</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+	
+		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-context</artifactId>
 		</dependency>
@@ -100,6 +106,10 @@
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-tx</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-jdbc</artifactId>
+		</dependency>
 
 		<!-- 使用SLF4J和LogBack作为日志 -->
 		<dependency>
@@ -137,15 +147,28 @@
     		<groupId>org.mybatis</groupId>
     		<version>3.2.8</version>
 		</dependency>
-
-		<!-- jaskson 对 json 和 xml 的支持 -->
+		<dependency>
+			<groupId>net.sf.json-lib</groupId>
+			<artifactId>json-lib</artifactId>
+			<version>2.4</version>
+			<classifier>jdk15</classifier><!--该版json库对应的jdk版本 -->
+			<exclusions>
+				<exclusion>
+					<artifactId>commons-beanutils</artifactId>
+					<groupId>commons-beanutils</groupId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<!-- jaskson 对 json 和 xml 的支持
 		<dependency>
 			<groupId>com.fasterxml.jackson.dataformat</groupId>
 			<artifactId>jackson-dataformat-xml</artifactId>
-		</dependency>
+		</dependency> -->
 		<!-- 注意我们的项目里其实常用的是下面的包，因为我们主要使用json，当然有了上面的依赖，下面就可以不写了，上面的依赖包含下面的依赖 -->
 		<!-- <dependency> <groupId>com.fasterxml.jackson.core</groupId> <artifactId>jackson-databind</artifactId> 
 			<version>2.5.3</version> </dependency> -->
+			<dependency> <groupId>com.fasterxml.jackson.core</groupId> <artifactId>jackson-databind</artifactId> 
+			</dependency>
 		<dependency>
 			<groupId>commons-lang</groupId>
 			<artifactId>commons-lang</artifactId>

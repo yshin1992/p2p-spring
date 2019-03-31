@@ -99,6 +99,9 @@ public class Member extends DynamicEntity{
 
 	@Column(length = 64)
 	private String email;// 验证邮箱
+	
+	@Column(length = 256)
+	private String address;//住址
 
 	@Column()
 	private Integer level;// 会员等级1：普通会员，2：至尊会员（根据需要进行扩张）
@@ -558,6 +561,14 @@ public class Member extends DynamicEntity{
 		this.zsAccounts = zsAccounts;
 	}
 
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
 	@Override
 	public String toString() {
 		return "Member [memberId=" + memberId + ", audits=" + audits
@@ -566,16 +577,16 @@ public class Member extends DynamicEntity{
 				+ ", realCd=" + realCd + ", realNm=" + realNm + ", nickName="
 				+ nickName + ", password=" + password + ", idCard=" + idCard
 				+ ", bankNo=" + bankNo + ", phone=" + phone + ", email="
-				+ email + ", level=" + level + ", registTime=" + registTime
-				+ ", status=" + status + ", lastLogin=" + lastLogin
-				+ ", loginCount=" + loginCount + ", registTimeFrom="
-				+ registTimeFrom + ", registTimeTo=" + registTimeTo
-				+ ", lastLoginFrom=" + lastLoginFrom + ", lastLoginTo="
-				+ lastLoginTo + ", lastLoginIp=" + lastLoginIp + ", auditType="
-				+ auditType + ", promotionId=" + promotionId + ", memberIdZ="
-				+ memberIdZ + ", memberIntegral=" + memberIntegral + "]";
+				+ email + ", address=" + address + ", level=" + level
+				+ ", registTime=" + registTime + ", status=" + status
+				+ ", lastLogin=" + lastLogin + ", loginCount=" + loginCount
+				+ ", registTimeFrom=" + registTimeFrom + ", registTimeTo="
+				+ registTimeTo + ", lastLoginFrom=" + lastLoginFrom
+				+ ", lastLoginTo=" + lastLoginTo + ", lastLoginIp="
+				+ lastLoginIp + ", auditType=" + auditType + ", promotionId="
+				+ promotionId + ", memberIdZ=" + memberIdZ
+				+ ", memberIntegral=" + memberIntegral + "]";
 	}
-	
 	
 
 }

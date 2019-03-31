@@ -10,6 +10,12 @@
 				           http://www.springframework.org/schema/aop  http://www.springframework.org/schema/aop/spring-aop.xsd
 				           http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
 				           http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
+	
+	<import resource="classpath:application-dataSource.xml"/>
+	<import resource="classpath:application-transaction.xml"/>
+	
+	<context:component-scan base-package="org.p2p.dao.impl,org.p2p.service"></context:component-scan>
+	
 	<!-- 图形验证码 -->
 	<bean id="producer" class="com.google.code.kaptcha.impl.DefaultKaptcha">
 		<property name="config">  

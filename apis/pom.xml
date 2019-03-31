@@ -22,10 +22,20 @@
 
   <dependencies>
   <dependency>
+			<groupId>com.njmcxr.p2p</groupId>
+			<artifactId>domain</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+  
+  <dependency>
   		<groupId>org.springframework</groupId>
   		<artifactId>spring-context</artifactId>
   	</dependency>
   
+  <dependency>
+  		<groupId>org.springframework</groupId>
+  		<artifactId>spring-context-support</artifactId>
+  	</dependency>
   	<!-- Spring AOP -->
   	<dependency>
   		<groupId>org.springframework</groupId>
@@ -56,6 +66,11 @@
 			<artifactId>mchange-commons-java</artifactId>
 			<version>0.2.9</version>
 		</dependency>
+		<dependency>
+			<groupId>com.mchange</groupId>
+			<artifactId>c3p0</artifactId>
+			<version>0.9.5</version>
+		</dependency>
 		<!-- 增加对JSR250的支持，使其能够支持PostConstructor等注解 -->
 		<dependency>
 			<groupId>javax.annotation</groupId>
@@ -78,20 +93,6 @@
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-webmvc</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>javax.servlet</groupId>
-			<artifactId>jstl</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>javax.servlet</groupId>
-			<artifactId>javax.servlet-api</artifactId>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>javax.servlet.jsp</groupId>
-			<artifactId>jsp-api</artifactId>
-			<version>2.2</version>
 		</dependency>
 		
 		<!-- Spring Transactions -->
@@ -127,24 +128,33 @@
 			<artifactId>logback-access</artifactId>
 		</dependency>
 		
-		<!-- jaskson 对 json 和 xml 的支持 -->
-		<dependency>
-			<groupId>com.fasterxml.jackson.dataformat</groupId>
-			<artifactId>jackson-dataformat-xml</artifactId>
-		</dependency>
 		<!-- 注意我们的项目里其实常用的是下面的包，因为我们主要使用json，当然有了上面的依赖，下面就可以不写了，上面的依赖包含下面的依赖 -->
-		<!-- 
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-databind</artifactId>
-			<version>2.5.3</version>
-		</dependency> -->
+		</dependency> 
 		<dependency>
 			<groupId>commons-lang</groupId>
 			<artifactId>commons-lang</artifactId>
 			<version>2.6</version>
 		</dependency>
   
+  		<dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-entitymanager</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-ehcache</artifactId>
+        </dependency>
+   		<dependency>
+            <groupId>org.springframework.data</groupId>
+            <artifactId>spring-data-jpa</artifactId>
+        </dependency>
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>

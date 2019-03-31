@@ -13,7 +13,7 @@ import org.springframework.web.servlet.view.JstlView;
  * @author yanshuai
  *
  */
-@EnableWebMvc
+@EnableWebMvc//开启WebMVC
 @Configuration
 @ComponentScan(basePackages={"org.apis.controller"})
 public class WebMVCConfig extends WebMvcConfigurerAdapter{

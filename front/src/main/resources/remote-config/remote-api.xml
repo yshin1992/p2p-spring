@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE ajaxEventMaping SYSTEM "classpath:remote-api.dtd">
+<apis>
+    <!-- 注册提交（个人） -->
+	<request url="personalregister" id="register"/>
+</apis>

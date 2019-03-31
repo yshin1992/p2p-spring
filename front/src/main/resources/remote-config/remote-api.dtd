@@ -1,0 +1,4 @@
+<!ELEMENT apis (request*)>
+<!ELEMENT request EMPTY>
+<!ATTLIST request id CDATA #REQUIRED>
+<!ATTLIST request url CDATA #REQUIRED>

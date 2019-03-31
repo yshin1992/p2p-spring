@@ -78,8 +78,6 @@
     <module>domain</module>
     <module>business</module>
     <module>dao-hibernate</module>
-    <module>dao-springdata</module>
-    <module>dao-mybatis</module>
     <module>shiro-servlet</module>
     <module>shiro-spring</module>
     <module>front</module>
