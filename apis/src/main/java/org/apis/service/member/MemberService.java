@@ -1,10 +1,15 @@
 package org.apis.service.member;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
+
+import javax.transaction.Transactional;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apis.dao.member.MemberRepository;
 import org.apis.dao.member.UserSummaryRepository;
+import org.apis.listener.event.LoginSuccessEvent;
 import org.apis.listener.event.RegisterSucessEvent;
 import org.domain.member.Member;
 import org.domain.member.UserSummary;
@@ -24,6 +29,7 @@ public class MemberService {
 	
 	@Autowired
 	ApplicationContext applicationContext;
+	
 	/**
 	 * 会员注册
 	 * @param member 会员信息
@@ -31,6 +37,7 @@ public class MemberService {
 	 * @return
 	 * @throws Exception
 	 */
+	@Transactional
 	public Member regist(Member member,int memberKind) throws Exception{
 		Member saveMember = new Member();
 		saveMember.setRegistTimeFrom(new Date());//注册开始时间
@@ -64,6 +71,7 @@ public class MemberService {
 			saveMember.setMemberIdZ(tgMember.getId());//推荐人
 		}
 		
+		saveMember.setNickName(member.getNickName());
 		saveMember.setPhone(member.getPhone());
 		saveMember.setEmail(member.getPhone());
 		saveMember.setAddress(member.getAddress());
@@ -90,4 +98,57 @@ public class MemberService {
 		return member;
 	}
 	
+	
+	/**
+	 * 用户登录
+	 * @param mobile
+	 * @param password
+	 * @param lastLoginIp
+	 * @return
+	 * @throws Exception
+	 */
+	@Transactional
+	public Member login(String mobile,String password,String lastLoginIp) throws Exception{
+		List<Member> members = memberRepository.findAllByPhone(mobile);
+		if(members.size() > 1){
+			throw new Exception("当前输入手机号匹配多个登录账户，请联系平台系统管理员。");
+		}
+		if(members.size() == 0){
+			throw new Exception("请输入正确的用户名和密码");
+		}
+		
+		Member m = members.get(0);
+		
+		if(m.getStatus() == Member.MEMBER_STATUS_LIMIT.intValue()){
+			throw new Exception("该用户已被限制登录!");
+		}
+		
+		if(StringUtils.isEmpty(m.getRealCd())){
+			throw new Exception("用户信息RealCd域为空");
+		}
+		
+		String encryptPassword = StringUtil.generateEncryptPassword(password, m.getRealCd());
+		if(!encryptPassword.equalsIgnoreCase(m.getPassword())){
+			throw new Exception("请输入正确的用户名和密码");
+		}
+		
+		//判断是否是今日首次登录
+		Date lastLoginTime = m.getLastLogin();
+		boolean isFirtLoginToday = false;
+		if(lastLoginTime == null){
+			isFirtLoginToday = true;
+		}else{
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+			isFirtLoginToday = !sdf.format(new Date()).equals(sdf.format(lastLoginTime));
+		}
+		m.setLastLoginIp(lastLoginIp);
+		m.setLastLogin(new Date());
+		m.setLastLoginFrom(new Date());
+		m.setLastLoginTo(new Date());
+		//增加登录次数
+		m.setLoginCount(m.getLoginCount()+1);
+		memberRepository.saveAndFlush(m);
+		applicationContext.publishEvent(new LoginSuccessEvent(m, isFirtLoginToday));
+		return m;
+	}
 }

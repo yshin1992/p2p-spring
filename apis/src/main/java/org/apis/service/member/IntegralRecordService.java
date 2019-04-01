@@ -83,4 +83,13 @@ public class IntegralRecordService {
 		sendIntegral(recommendMember, integralVal, IntegralRecordEnum.ISADDFLAG_ADD_1, remark, registerMember.getMemberId(),
 				IntegralRecordEnum.OBJTYPE_RECOMMENDED_FRIEND_REGISTRATION_2, null);
 	}
+
+	public void loginGiveIntegral(Member member, Integer integralVal) {
+		String remark = this.buildRemark(
+				"会员[" + member.getRealCd() + "][" + (StringUtils.isNotEmpty(member.getRealNm()) ? member.getRealNm() : member.getPhone()) + "]",
+				"于" + member.getLastLoginFormat() + "登录获得积分");
+		sendIntegral(member, integralVal, IntegralRecordEnum.ISADDFLAG_ADD_1, remark, member.getMemberId(), IntegralRecordEnum.OBJTYPE_LOGIN_1, null);
+	}
 }
+
+

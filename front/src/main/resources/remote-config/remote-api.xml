@@ -3,4 +3,13 @@
 <apis>
     <!-- 注册提交（个人） -->
 	<request url="personalregister" id="register"/>
+	
+	<!-- 注册页面获取短信验证码 -->
+	<request id="getVfCode" url="findSMSCode"/>
+	
+	<!--校验短信验证接口 参数:手机号，手机验证码-->
+    <request id="vfCodeValidation" url="validateSMSCode"/>
+    
+    <!-- 登录接口 -->
+	<request id="login" url="login" />
 </apis>

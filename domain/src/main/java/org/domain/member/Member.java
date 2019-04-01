@@ -13,7 +13,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
-import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -274,8 +273,7 @@ public class Member extends DynamicEntity{
 	@Column(length = 32)
 	private String memberIdZ;// 推荐人id
 	
-	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = true)
-	@PrimaryKeyJoinColumn
+	@OneToOne(cascade = CascadeType.ALL,mappedBy="member", fetch = FetchType.LAZY, optional = true)
 	private MemberIntegral memberIntegral;
 	
 	@Override

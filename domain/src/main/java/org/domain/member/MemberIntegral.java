@@ -3,11 +3,13 @@ package org.domain.member;
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 
 import org.domain.DynamicEntity;
@@ -26,15 +28,16 @@ public class MemberIntegral extends DynamicEntity {
 	 * 会员标识
 	 */
 	@Id
-	@GenericGenerator(name = "generator", strategy = "foreign", parameters = { @Parameter(name = "property", value = "member") })
+	@GenericGenerator(name = "generator", strategy = "uuid")
 	@GeneratedValue(generator = "generator")
 	@Column(length = 32)
-	private String memberId;
+	private String intergralId;
 
 	/**
 	 * 会员
 	 */
-	@OneToOne(fetch = FetchType.EAGER, mappedBy = "memberIntegral")
+	@OneToOne(fetch = FetchType.EAGER, cascade=CascadeType.ALL)
+	@JoinColumn(name="memberId")
 	private Member member;
 
 	/**
@@ -65,21 +68,15 @@ public class MemberIntegral extends DynamicEntity {
 
 	@Override
 	public String getId() {
-		return getMemberId();
+		return intergralId;
 	}
 
 	@Override
 	public void setId(String id) {
-		this.memberId = id;
+		this.intergralId = id;
 	}
 
-	public String getMemberId() {
-		return memberId;
-	}
 
-	public void setMemberId(String memberId) {
-		this.memberId = memberId;
-	}
 
 	public Member getMember() {
 		return member;
@@ -136,11 +133,20 @@ public class MemberIntegral extends DynamicEntity {
 			return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(getUpdateTime());
 	}
 
+	public String getIntergralId() {
+		return intergralId;
+	}
+
+	public void setIntergralId(String intergralId) {
+		this.intergralId = intergralId;
+	}
+
 	@Override
 	public String toString() {
-		return "MemberIntegral [memberId=" + memberId + ", integralVal=" + integralVal + ", total=" + total
-				+ ", usedValue=" + usedValue + ", usedAmount=" + usedAmount + ", maxInvestAmount=" + maxInvestAmount
-				+ "]";
+		return "MemberIntegral [intergralId=" + intergralId + ", member="
+				+ member + ", integralVal=" + integralVal + ", total=" + total
+				+ ", usedValue=" + usedValue + ", usedAmount=" + usedAmount
+				+ ", maxInvestAmount=" + maxInvestAmount + "]";
 	}
 
 }

@@ -6,6 +6,7 @@ import javax.validation.constraints.Size;
 import org.p2p.form.group.ForgotPasswordCheck;
 import org.p2p.form.group.LoginCheck;
 import org.p2p.form.group.RegistCheck;
+import org.p2p.form.group.RegistSendCodeCheck;
 /**
  * 注册表单（用于校验)
  * https://blog.csdn.net/u013815546/article/details/77248003
@@ -14,33 +15,35 @@ import org.p2p.form.group.RegistCheck;
  */
 public class RegisterForm {
 
-	@NotNull(message="用户名不能为空",groups={RegistCheck.class})
-	@Size(max=16,message="用户名最大长度为16个字符",groups={RegistCheck.class})
+	@NotNull(message="用户名不能为空",groups={RegistCheck.class,RegistSendCodeCheck.class})
+	@Size(max=16,message="用户名最大长度为16个字符",groups={RegistCheck.class,RegistSendCodeCheck.class})
 	private String nickName;// 用户呢称
 	
-	@NotNull(message="手机号不能为空",groups={RegistCheck.class,LoginCheck.class,ForgotPasswordCheck.class})
-	@Size(max=11,min=11,message="手机号非法",groups={RegistCheck.class,LoginCheck.class,ForgotPasswordCheck.class})
+	@NotNull(message="手机号不能为空",groups={RegistCheck.class,LoginCheck.class,ForgotPasswordCheck.class,RegistSendCodeCheck.class})
+	@Size(max=11,min=11,message="手机号非法",groups={RegistCheck.class,LoginCheck.class,ForgotPasswordCheck.class,RegistSendCodeCheck.class})
 	private String phone;
 	
-	@NotNull(message="密码不能为空",groups={RegistCheck.class,LoginCheck.class,ForgotPasswordCheck.class})
-	@Size(min=6,message="密码最短为6个字符",groups={RegistCheck.class,LoginCheck.class,ForgotPasswordCheck.class})
+	@NotNull(message="密码不能为空",groups={RegistCheck.class,LoginCheck.class,ForgotPasswordCheck.class,RegistSendCodeCheck.class})
+	@Size(min=6,message="密码最短为6个字符",groups={RegistCheck.class,LoginCheck.class,ForgotPasswordCheck.class,RegistSendCodeCheck.class})
 	private String password;
 	
-	@NotNull(message="密码不能为空",groups={RegistCheck.class,LoginCheck.class,ForgotPasswordCheck.class})
-	@Size(min=6,message="密码最短为6个字符",groups={RegistCheck.class,LoginCheck.class,ForgotPasswordCheck.class})
+	@NotNull(message="密码不能为空",groups={RegistCheck.class,ForgotPasswordCheck.class,RegistSendCodeCheck.class})
+	@Size(min=6,message="密码最短为6个字符",groups={RegistCheck.class,ForgotPasswordCheck.class,RegistSendCodeCheck.class})
 	private String confirm;
 	
-	@NotNull(message="住址不能为空",groups={RegistCheck.class})
+	@NotNull(message="住址不能为空",groups={RegistCheck.class,RegistSendCodeCheck.class})
 	private String address;
 	
-	@NotNull(message="电子邮件地址不能为空",groups={RegistCheck.class})
+	@NotNull(message="电子邮件地址不能为空",groups={RegistCheck.class,RegistSendCodeCheck.class})
 	private String email;
 	
-	@NotNull(message="图形验证码不能为空",groups={RegistCheck.class,LoginCheck.class,ForgotPasswordCheck.class})
+	@NotNull(message="图形验证码不能为空",groups={RegistCheck.class,ForgotPasswordCheck.class,RegistSendCodeCheck.class})
 	private String captcha;//图形验证码
 	
 	@NotNull(message="手机验证码不能为空",groups={RegistCheck.class,ForgotPasswordCheck.class})
 	private String vfCode;//手机验证码
+	
+	private String promotionId;
 
 	public String getNickName() {
 		return nickName;
@@ -105,13 +108,22 @@ public class RegisterForm {
 	public void setVfCode(String vfCode) {
 		this.vfCode = vfCode;
 	}
+	
+	public String getPromotionId() {
+		return promotionId;
+	}
+
+	public void setPromotionId(String promotionId) {
+		this.promotionId = promotionId;
+	}
 
 	@Override
 	public String toString() {
 		return "RegisterForm [nickName=" + nickName + ", phone=" + phone
 				+ ", password=" + password + ", confirm=" + confirm
 				+ ", address=" + address + ", email=" + email + ", captcha="
-				+ captcha + ", vfCode=" + vfCode + "]";
+				+ captcha + ", vfCode=" + vfCode + ", promotionId="
+				+ promotionId + "]";
 	}
 	
 }

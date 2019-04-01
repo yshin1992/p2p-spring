@@ -2,6 +2,8 @@ package org.apis.service.member;
 
 import java.math.BigDecimal;
 
+import javax.transaction.Transactional;
+
 import org.apache.commons.lang3.StringUtils;
 import org.apis.dao.member.MemberIntegralRepository;
 import org.apis.dao.member.MemberRepository;
@@ -38,6 +40,7 @@ public class MemberIntegralService {
 	 * @param memberId
 	 * @return
 	 */
+	@Transactional
 	public MemberIntegral initMemberIntegral(String memberId) {
 		MemberIntegral mi = memberIntegralRepository.findOne(memberId);
 		if(null == mi){
@@ -48,12 +51,13 @@ public class MemberIntegralService {
 			mi = new MemberIntegral();
 			mi.init();
 			mi.setCreateTime(member.getRegistTime());
-			mi.setMember(member);
 			mi.setTotal(0);
 			mi.setMaxInvestAmount(BigDecimal.ZERO);
 			mi.setIntegralVal(0);
 			mi.setUsedAmount(BigDecimal.ZERO);
 			mi.setUsedValue(0);
+			member.setMemberIntegral(mi);
+			mi.setMember(member);
 			mi = memberIntegralRepository.saveAndFlush(mi);
 		}
 		return mi; 
@@ -72,6 +76,7 @@ public class MemberIntegralService {
 	 * 注册赠送积分
 	 * @param memberId
 	 */
+	@Transactional
 	public void registerGiveIntegral(String memberId){
 		if(!checkIsUseIntegral()){
 			return;
@@ -81,7 +86,7 @@ public class MemberIntegralService {
 		if(null == registMember){
 			throw new RuntimeException("未查询到注册会员信息");
 		}
-		MemberIntegral mi = memberIntegralRepository.findOne(memberId);
+		MemberIntegral mi = memberIntegralRepository.findByMember(registMember);
 		if(null == mi){
 			throw new RuntimeException("未查询到会员积分信息");
 		}
@@ -107,7 +112,7 @@ public class MemberIntegralService {
 			if(null == memberZ){
 				throw new RuntimeException("未查到推荐人信息");
 			}
-			MemberIntegral miZ = memberIntegralRepository.findOne(registMember.getMemberIdZ());
+			MemberIntegral miZ = memberIntegralRepository.findByMember(memberZ);
 			if(null == miZ){
 				throw new RuntimeException("未查询到推荐人积分信息");
 			}
@@ -122,7 +127,33 @@ public class MemberIntegralService {
 				logger.debug("注册获得积分=====更新注册会员的推荐人积分=====获得积分:{}分", recommendFriendsGiveIntegral);
 			}
 		}
+	}
+	
+	@Transactional
+	public void loginGiveIntegral(Member member ,boolean isFirstLoginToday){
+		if(!checkIsUseIntegral() && !isFirstLoginToday){
+			return;
+		}
+		logger.debug("注册获得积分=====传入参数：memberId:{}", member.getMemberId());
 		
+		// 获取积分配置参数
+		Integer	integralVal = CacheUtil.getInt(CategoryAttrEnum.INTEGRAL_LOGINGIVEINTEGRAL.getAttrCd(), 0);
+		if (integralVal <= 0) {
+			logger.debug("登录未获得积分。积分设计中登录获得积分送参数值为0。integralVal:{}", integralVal);
+			return;
+		}
+		
+		MemberIntegral integral = memberIntegralRepository.findByMember(member);
+		if(null == integral){
+			throw new RuntimeException("未查询到会员积分信息");
+		}
+		// 添加明细
+		integralRecordService.loginGiveIntegral(member, integralVal);
+		//更新用户积分
+		integral.setIntegralVal(integral.getIntegralVal()+integralVal);	
+		memberIntegralRepository.saveAndFlush(integral);
+		
+		logger.debug("登录获得积分=====更新登录会员的积分=====获得积分:{}分", integralVal);
 	}
 	
 }

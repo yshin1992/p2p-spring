@@ -39,7 +39,7 @@ hr{
 	<div class="layui-col-md5">
       <div class="">服务热线:400-828-1949 &nbsp;&nbsp;QQ群号：205816335&nbsp;&nbsp;服务时间：9:00 - 18:00</div>
     </div>
-    <div class="layui-col-md1 layui-col-md-offset1">登录</div>
+    <div class="layui-col-md1 layui-col-md-offset1"><a href="${webRoot }/login">登录</a></div>
     <div class="layui-col-md1"><a href="personalRegist">个人注册</a></div>
     <div class="layui-col-md1"><a href="enterpriseRegist">企业注册</a></div>
     <div class="layui-col-md1">帮助中心</div>

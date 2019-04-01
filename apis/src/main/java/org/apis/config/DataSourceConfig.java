@@ -1,6 +1,7 @@
 package org.apis.config;
 
 import java.beans.PropertyVetoException;
+import java.util.Properties;
 
 import javax.sql.DataSource;
 
@@ -27,7 +28,7 @@ import com.mchange.v2.c3p0.ComboPooledDataSource;
  */
 @Configuration
 @EnableJpaRepositories(basePackages={"org.apis.dao"},entityManagerFactoryRef="entityManagerFactory",transactionManagerRef="transactionManager")//开启jpa:repositories
-@EnableTransactionManagement//开启事务管理
+@EnableTransactionManagement(proxyTargetClass=true)//开启事务管理
 @PropertySource(value={"classpath:c3p0.properties"})
 public class DataSourceConfig {
 
@@ -113,6 +114,14 @@ public class DataSourceConfig {
 		entityManagerFactory.setPackagesToScan("org.domain");
 		entityManagerFactory.setPersistenceProvider(new HibernatePersistenceProvider());
 		entityManagerFactory.setJpaDialect(new HibernateJpaDialect());
+		
+		Properties prop = new Properties();
+		prop.put("hibernate.hbm2ddl.auto", "update");
+		prop.put("hibernate.max_fetch_depth","3");
+		prop.put("hibernate.jdbc.fetch_size", "8");
+		prop.put("hibernate.jdbc.batch_size", "8");
+		prop.put("javax.persistence.validation.mode", "none");
+		entityManagerFactory.setJpaProperties(prop);
 		
 		return entityManagerFactory;
 	}
