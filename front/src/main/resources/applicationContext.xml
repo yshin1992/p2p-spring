@@ -13,8 +13,9 @@
 	
 	<import resource="classpath:application-dataSource.xml"/>
 	<import resource="classpath:application-transaction.xml"/>
+    <import resource="classpath:application-websocket.xml"/>
 	
-	<context:component-scan base-package="org.p2p.dao.impl,org.p2p.service"></context:component-scan>
+	<context:component-scan base-package="org.p2p.dao.impl,org.p2p.service,org.p2p.listener"></context:component-scan>
 	
 	<!-- 图形验证码 -->
 	<bean id="producer" class="com.google.code.kaptcha.impl.DefaultKaptcha">

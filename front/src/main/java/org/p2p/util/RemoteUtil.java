@@ -341,7 +341,7 @@ public class RemoteUtil {
 			return submit(apiId, requestParam, "POST");
 		} catch (MalformedURLException e) {
 			logger.error(e.getMessage(), e.getCause());
-			return "";
+			throw new RuntimeException(e);
 		}
 	}
 	
@@ -357,7 +357,7 @@ public class RemoteUtil {
 			return submit(apiId, requestParam, "GET");
 		} catch (MalformedURLException e) {
 			logger.error(e.getMessage(), e.getCause());
-			return "";
+			throw new RuntimeException(e);
 		}
 	}
 	

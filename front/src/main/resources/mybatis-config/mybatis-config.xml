@@ -7,12 +7,15 @@
    <properties>
     <property name="dialect" value="mysql"/>
    </properties>
+   
+   <typeAliases>
+   	<package name="org.domain.member"/>
+   </typeAliases>
+   
    <plugins>
-    
      <!-- 用SQL分页替换Mybatis分页配置-->
     <plugin interceptor="org.p2p.ext.PaginationInterceptor"/>
-    
    </plugins>
-   
+
    
 </configuration>

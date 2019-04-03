@@ -131,7 +131,7 @@ public class MemberIntegralService {
 	
 	@Transactional
 	public void loginGiveIntegral(Member member ,boolean isFirstLoginToday){
-		if(!checkIsUseIntegral() && !isFirstLoginToday){
+		if(!checkIsUseIntegral() || !isFirstLoginToday){
 			return;
 		}
 		logger.debug("注册获得积分=====传入参数：memberId:{}", member.getMemberId());

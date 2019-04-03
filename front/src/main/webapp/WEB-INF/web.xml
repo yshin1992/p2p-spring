@@ -39,18 +39,30 @@ version="3.0">
     第二段，ContextLoader创建的是 XmlWebApplicationContext这样一个类，它实现的接口是WebApplicationContext->ConfigurableWebApplicationContext->ApplicationContext->  
     BeanFactory这样一来spring中的所有bean都由这个类来创建  
      IUploaddatafileManager uploadmanager = (IUploaddatafileManager)    ContextLoaderListener.getCurrentWebApplicationContext().getBean("uploadManager");
-     -->  
-    
-    <!-- 配置日志 -->
-    <listener>      
-   		<listener-class>org.springframework.web.util.Log4jConfigListener</listener-class>      
-	</listener>
-    <context-param>  
-        <param-name>log4jConfigLocation</param-name>  
-        <param-value>classpath:log4j.xml</param-value>  
+     -->
+    <context-param>
+        <param-name>log4jConfiguration</param-name>
+        <param-value>classpath:log4j2.xml</param-value>
     </context-param>
     
-    
+    <!-- 配置日志 -->
+    <listener>
+        <listener-class>org.apache.logging.log4j.web.Log4jServletContextListener</listener-class>
+    </listener>
+    <filter>
+        <filter-name>log4jServletFilter</filter-name>
+        <filter-class>org.apache.logging.log4j.web.Log4jServletFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>log4jServletFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+        <dispatcher>REQUEST</dispatcher>
+        <dispatcher>FORWARD</dispatcher>
+        <dispatcher>INCLUDE</dispatcher>
+        <dispatcher>ERROR</dispatcher>
+    </filter-mapping>
+
+
     <listener>  
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>  
     </listener>  
@@ -140,8 +152,10 @@ version="3.0">
   <session-config><!--会话超时配置，单位分钟-->  
         <session-timeout>360</session-timeout>  
     </session-config>
-    
+
+
     <welcome-file-list>
-    	<welcome-file>/WEB-INF/views/index.jsp</welcome-file>
+    	<welcome-file></welcome-file>
     </welcome-file-list>
+
 </web-app>

@@ -1,5 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%
+    String context = request.getServletContext().getContextPath();
+    String path = request.getServerName()+":"+request.getLocalPort()+context;
+    request.setAttribute("path",path);
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -39,10 +45,19 @@ hr{
 	<div class="layui-col-md5">
       <div class="">服务热线:400-828-1949 &nbsp;&nbsp;QQ群号：205816335&nbsp;&nbsp;服务时间：9:00 - 18:00</div>
     </div>
-    <div class="layui-col-md1 layui-col-md-offset1"><a href="${webRoot }/login">登录</a></div>
-    <div class="layui-col-md1"><a href="personalRegist">个人注册</a></div>
-    <div class="layui-col-md1"><a href="enterpriseRegist">企业注册</a></div>
-    <div class="layui-col-md1">帮助中心</div>
+    <c:if test="${empty loginUser }">
+    	<div class="layui-col-md1 layui-col-md-offset1"><a href="${webRoot }/login">登录</a></div>
+	    <div class="layui-col-md1"><a href="personalRegist">个人注册</a></div>
+	    <div class="layui-col-md1"><a href="enterpriseRegist">企业注册</a></div>
+	    <div class="layui-col-md1">帮助中心</div>
+    </c:if>
+    <c:if test="${not empty loginUser }">
+    	<div class="layui-col-md2 layui-col-md-offset1">帮助中心</div>
+    	<div class="layui-col-md2">
+    		您好,${loginUser.nickName } <a href="${webRoot }/logout">[ 退出 ]</a>
+    	</div>
+    </c:if>
+    <div class="layui-col-md1">当前在线用户数:<span id="count">0</span>人</div>
 </div>
 
 <div class="layui-container">
@@ -60,5 +75,55 @@ hr{
     <div class="layui-col-md1 nav">我的账户</div>
 </div>
 <hr style="margin:0px"/>
+
+<script>
+    <c:if test="${not empty loginUser }">
+        var socket = new WebSocket('ws://'+'${path}'+'/websocket');
+        socket.onopen = function(event){
+            console.log(event);
+            socket.send('${pageContext.session.id}'+":"+'${loginUser.id}');
+        }
+        socket.onclose = function(event){
+            console.log(event);
+        }
+
+        socket.onerror = function(event){
+            console.log(event);
+        }
+
+        socket.onmessage = function(event){
+            console.log(event.data);
+            var data = JSON.parse(event.data);
+            if(data.dataType == 1){
+                alert(data.msg);
+                location.href="${webRoot}/index";
+            }
+        }
+    </c:if>
+
+</script>
+<script type="text/javascript">
+    if(typeof(window.EventSource)!=="undefined"){
+        var source = new EventSource('sse/pushcount');
+        source.addEventListener("message",function(e){
+            document.getElementById("count").innerHTML=e.data;
+        });
+
+        source.addEventListener("open",function(e){
+            console.log("连接打开");
+        },false);
+
+        source.addEventListener("error",function(e){
+            if(e.readyState == EventSource.CLOSED){
+                console.log("连接关闭");
+            }else{
+                console.log(e);
+            }
+        },false);
+
+    }else{
+        console.log("您的浏览器不支持SSE");
+    }
+</script>
 </body>
 </html>

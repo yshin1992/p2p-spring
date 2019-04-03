@@ -18,6 +18,10 @@
         <layout class="org.apache.log4j.PatternLayout">
             <param name='ConversionPattern' value='[%-5p][%d{yyyy/MM/dd HH:mm:ss}][%l][%m]%n' />
         </layout>
+        <filter class="org.apache.log4j.varia.LevelRangeFilter">
+            <param name="levelMin" value="info" />
+            <param name="AcceptOnMatch" value="true" />
+        </filter>
     </appender>
     
     <!-- Application Loggers -->
@@ -27,20 +31,9 @@
     </logger>
     
     <!-- 3rdparty Loggers -->
-    <logger name="org.springframework.core">
+    <logger name="org.springframework">
         <level value="info" />
-    </logger>
-    
-    <logger name="org.springframework.beans">
-        <level value="info" />
-    </logger>
-    
-    <logger name="org.springframework.context">
-        <level value="info" />
-    </logger>
-
-    <logger name="org.springframework.web">
-        <level value="info" />
+        <appender-ref ref="Console" />
     </logger>
 
     <!-- SQL Loggers -->

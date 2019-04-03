@@ -60,23 +60,27 @@
      	<property name="suffix" value=".jsp"></property>
      	<property name="viewClass" value="org.springframework.web.servlet.view.JstlView"></property>
      </bean>
-     
-     <!-- 配置/路径跳转的页面，也可以在web.xml中配置welcome-file
-     <mvc:view-controller path="/" view-name="/index"/>  -->
+
+	<mvc:annotation-driven />
+     <!-- 配置/路径跳转的页面，也可以在web.xml中配置welcome-file -->
+	<!-- path是JSP页面相对WEB-INF的路径 -->
+    <mvc:view-controller path="/" view-name="index"/>
+	<mvc:view-controller path="/index" view-name="index" />
      <!-- 配置Interceptor -->
-     <!--
+
      <mvc:interceptors>
         <mvc:interceptor>
-            <mvc:mapping path="/admin/*" />
-            <bean class="com.base.admin" />
+            <mvc:mapping path="/login**" />
+            <bean class="org.p2p.interceptor.ReLoginForbiddenInterceptor" />
         </mvc:interceptor>
-        <mvc:interceptor>
-            <mvc:mapping path="/caes/*.trl" />
-            <bean class="com.base.caes" />
-        </mvc:interceptor>
+		 <mvc:interceptor>
+			 <mvc:mapping path="/**"/>
+			 <mvc:exclude-mapping path="/login**"/>
+			 <bean class="org.p2p.interceptor.LoginedRequiredAnnotationInterceptor"/>
+		 </mvc:interceptor>
+
     </mvc:interceptors>
-    
-    -->
+
     
    <!-- 设置上传文件解析器-->
 	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">

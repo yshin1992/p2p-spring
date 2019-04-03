@@ -33,7 +33,7 @@ public class WebInitializer implements WebApplicationInitializer {
 		
 		//注册log4j日志管理
 		servletContext.addListener(new Log4jConfigListener());
-		servletContext.setInitParameter("log4jConfigLocation", "classpath:log4j.xml");
+		servletContext.setInitParameter("log4jConfiguration", "classpath:log4j2.xml");
 		
 		servletContext.setInitParameter("webAppRootKey", "Apis");
 		

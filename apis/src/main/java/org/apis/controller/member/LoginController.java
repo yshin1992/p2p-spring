@@ -2,7 +2,6 @@ package org.apis.controller.member;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apis.service.member.MemberService;
-import org.domain.member.Member;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,9 +17,9 @@ public class LoginController {
 	private MemberService memberService;
 	
 	@RequestMapping("/login")
-	public ResponseMsg<Member> login(String mobile,String password,String lastLoginIp){
+	public ResponseMsg<String> login(String mobile,String password,String lastLoginIp){
 		logger.info("用户登录[webapi]开始，传入参数值：mobile:{},password:{},lastLoginIp:{}", mobile,password,lastLoginIp);
-		ResponseMsg<Member> msg = new ResponseMsg<Member>();
+		ResponseMsg<String> msg = new ResponseMsg<String>();
 		try{
 			if(StringUtils.isEmpty(mobile)){
 				throw new RuntimeException("手机号为空");
@@ -28,8 +27,7 @@ public class LoginController {
 			if(StringUtils.isEmpty(password)){
 				throw new RuntimeException("密码为空");
 			}
-			Member loginMember = memberService.login(mobile, password, lastLoginIp);
-			msg.setData(loginMember);
+			memberService.login(mobile, password, lastLoginIp);
 		}catch(Exception e){
 			msg.failure(e.getMessage());
 		}

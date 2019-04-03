@@ -40,12 +40,13 @@ public class RegisterController {
 	@RequestMapping(value="/personalRegist",method=RequestMethod.GET)
 	public String personalRegist(ModelMap model){
 		RegisterForm form = new RegisterForm();//注册测试用
-		form.setNickName("lion1992");
-		form.setPhone("15852087981");
+		form.setNickName("sun");
+		form.setPhone("13852087981");
 		form.setAddress("秦淮区中山南路342号");
-		form.setEmail("1658922720@qq.com");
+		form.setEmail("1678922720@qq.com");
 		form.setPassword("1qazxsw2");
 		form.setConfirm("1qazxsw2");
+		form.setPromotionId("15852087981");
 		model.addAttribute("user", form);
 		return "login/personal_regist";
 	}
@@ -68,6 +69,7 @@ public class RegisterController {
 		String email = form.getEmail();
 		String captcha = form.getCaptcha();
 		String vfCode = form.getVfCode();
+		String promotionId = form.getPromotionId();
 		
 		if(!StringUtils.equalsIgnoreCase(password, confirm)){
 			mv.addObject("error", "两次密码输入不一致");
@@ -98,7 +100,7 @@ public class RegisterController {
 		params.put("address", address);
 		params.put("email", email);
 		params.put("vfCode", vfCode);
-		
+		params.put("promotionId",promotionId);
 		String result = RemoteUtil.post("register", params);
 		ResponseMsg<?> vo = JsonUtil.toBeanOrMap(result, ResponseMsg.class);
 		if (vo.getCode() != 200) {

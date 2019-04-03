@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+   
+<mapper namespace="memberOperationLog">
+	
+	<resultMap type="memberOperationLog" id="memberOperationLogMap">
+		<id property="logId" column="logId"/>
+		<result property="url" column="logId"/>
+		<result property="targetObject" column="targetObject"/>
+		<result property="operateResult" column="operateResult"/>
+		<result property="sessionId" column="sessionId"/>
+		<result property="ip" column="ip"/>
+		<result property="operateDate" column="operateDate"/>
+		<result property="userAgent" column="userAgent"/>
+		<result property="acceptLanguage" column="acceptLanguage"/>
+		<result property="browser" column="browser"/>
+		<result property="browserName" column="browserName"/>
+		<result property="browserVersion" column="browserVersion"/>
+		<result property="browserType" column="browserType"/>
+		<result property="renderingEngine" column="renderingEngine"/>
+		<result property="operatingSystem" column="operatingSystem"/>
+		<result property="systemName" column="systemName"/>
+		<result property="deviceType" column="deviceType"/>
+		<association property="member" column="memberId" javaType="member">
+			<id property="memberId" column="memberId"/>
+		</association>
+		
+	</resultMap>
+	
+	<insert id="insert" parameterType="memberOperationLog" >
+		<selectKey keyProperty="logId" resultType="java.lang.String" order="BEFORE">
+			select replace(uuid(),'-','') from dual
+		</selectKey>
+		insert into member_operation_Log(<include refid="insertFields"/>) values(<include refid="values"/>)
+	</insert>
+	
+	<sql id="insertFields">
+		logId,url,targetObject,operateResult,sessionId,ip,operateDate,memberId,userAgent,acceptLanguage,browser,browserName,
+		browserVersion,browserType,renderingEngine,operatingSystem,systemName,deviceType
+	</sql>
+	
+	<sql id="values">
+		#{logId},#{url},#{targetObject},#{operateResult},#{sessionId},#{ip},#{operateDate},#{member.memberId},#{userAgent},#{acceptLanguage},
+		#{browser},#{browserName},#{browserVersion},#{browserType},#{renderingEngine},#{operatingSystem},#{systemName},#{deviceType}
+	</sql>
+	
+</mapper>
