@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="tags/manager"  prefix="mgr" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -14,6 +15,7 @@
 </style>
 </head>
 <body>
+<mgr:navs navigations="${navs }"/>
 <div class="layui-form layui-form-pane">
 <div class="layui-inline">
 		<a class="layui-btn" href="${webRoot}/system/useredit">新增</a>

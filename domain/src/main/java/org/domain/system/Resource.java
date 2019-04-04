@@ -65,7 +65,7 @@ public abstract class Resource extends StaticEntity{
 	@JoinColumn(name="appId")
 	private Application app;
 	
-	@ManyToOne(fetch=FetchType.LAZY)//ManyToOne指定了多对一的关系，fetch=FetchType.LAZY属性表示在多的那一方通过延迟加载的方式加载对象(默认不是延迟加载)
+	@ManyToOne(fetch=FetchType.EAGER)//ManyToOne指定了多对一的关系，fetch=FetchType.LAZY属性表示在多的那一方通过延迟加载的方式加载对象(默认不是延迟加载)
 	@JoinColumn(name="resourcePid")//通过 JoinColumn 的name属性指定了外键的名称 rid
 	private Resource parent;
 	

@@ -54,4 +54,11 @@ public class PermissionServiceImpl implements PermissionService {
 		return resourceCds;
 	}
 
+	@Override
+	public List<Resource> queryResourcesByUser(String userCd) {
+		User user = userDao.findByCd(userCd);
+		List<Resource> all = user.getIsAdmin()==1 ? resourceDao.findAll() : resourceDao.findByUser(userCd);
+		return all;
+	}
+
 }

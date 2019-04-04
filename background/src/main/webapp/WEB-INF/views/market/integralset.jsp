@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib uri="tags/manager"  prefix="mgr" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -21,6 +22,7 @@ body{
 }
 </style>
 </head>
+<mgr:navs navigations="${navs }"/>
 <div class="layui-form">
 	<div class="layui-form-item">
     <div class="layui-input-inline">

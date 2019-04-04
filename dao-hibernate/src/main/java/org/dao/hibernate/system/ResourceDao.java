@@ -19,4 +19,6 @@ public interface ResourceDao {
 	public List<Resource> findByIds(String[] ids);
 	
 	public List<Resource> findByUser(String userCd);
+	
+	public Resource findByUrl(String url);
 }

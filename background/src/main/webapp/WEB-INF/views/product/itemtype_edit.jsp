@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib uri="tags/manager"  prefix="mgr" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -16,6 +17,7 @@ body{
 </style>
 </head>
 <body>
+<mgr:navs navigations="${navs }"/>
 <form class="layui-form" action="${webRoot }/itemtypesave" method="post">
 		<input type="hidden" name="itemTypeId" id="hidItemTypeId" value="${type.itemTypeId }"/>
     	<input type="hidden" name="itemTypeCd" id="itemTypeCd" value="${type.itemTypeCd }"/>

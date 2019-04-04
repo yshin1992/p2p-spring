@@ -6,6 +6,7 @@ import java.util.Map;
 
 import javax.servlet.Filter;
 
+import org.apache.shiro.cache.ehcache.EhCacheManager;
 import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.spring.LifecycleBeanPostProcessor;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
@@ -34,11 +35,24 @@ import org.springframework.context.annotation.Configuration;
 public class ShiroConfig {
 	
 	private static final Logger logger = LoggerFactory.getLogger(ShiroConfig.class);
+	
+	/**
+	 * Shiro安全缓存，不然每次请求都会去走Realm 的doGetAuthorization方法去获得授权信息
+	 * @param cacheManager
+	 * @return
+	 */
+	@Bean
+	public EhCacheManager shiroCacheManager(){
+		EhCacheManager shiroCacheManager = new EhCacheManager();
+		shiroCacheManager.setCacheManagerConfigFile("classpath:shiro-ehcache.xml");
+		return shiroCacheManager;
+	}
+	
 	@Bean
 	public SecurityManager securityManager(CustomerRealm customerRealm){
 		DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
-		System.out.println("初始化Shiro -->" + customerRealm);
-		securityManager.setRealm(customerRealm);
+		securityManager.setCacheManager(shiroCacheManager());//添加缓存
+		securityManager.setRealm(customerRealm);//自定义Realm
 		return securityManager;
 	}
 	

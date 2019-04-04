@@ -18,8 +18,10 @@ import org.apache.shiro.subject.Subject;
 import org.apache.shiro.util.ByteSource;
 import org.business.system.PermissionService;
 import org.business.system.UserService;
+import org.business.util.SysFuncCache;
 import org.domain.system.Application;
 import org.domain.system.Menu;
+import org.domain.system.Resource;
 import org.domain.system.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -45,6 +47,9 @@ public class CustomerRealm extends AuthorizingRealm {
 	
 	@Autowired
 	private PermissionService permissionService;
+
+	@Autowired
+	private SysFuncCache sysFuncCache;
 	
 	public CustomerRealm(){
 		super();
@@ -71,6 +76,9 @@ public class CustomerRealm extends AuthorizingRealm {
 		SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
 		info.addStringPermissions(permissions);
 		logger.error("用户拥有的权限：{}",Arrays.toString(permissions.toArray(new String[]{})));
+
+		List<Resource> resources = permissionService.queryResourcesByUser(userCd);
+		sysFuncCache.cacheSysFunc(resources,userCd);
 		return info;
 	}
 
@@ -92,7 +100,6 @@ public class CustomerRealm extends AuthorizingRealm {
 		}
 		
 		Subject curUser = SecurityUtils.getSubject();
-		System.out.println(curUser.getSession().getAttribute("curUser"));
 		curUser.getSession().setAttribute("curUser", user);
 		
 		List<Application> apps = permissionService.findAppByUser(user.getUserCd(), user.getIsAdmin()==1);

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="tags/manager"  prefix="mgr" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -19,6 +20,7 @@ body {
 </style>
 </head>
 <body>
+<mgr:navs navigations="${navs }"/>
 <form class="layui-form" action="${webRoot }/system/roleSave" method="post">
 <input type="hidden" name="roleId" value="${role.roleId }"/>
 <input type="hidden" name="ids" />

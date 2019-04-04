@@ -9,6 +9,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.crypto.hash.SimpleHash;
 import org.business.AbstractServiceImpl;
 import org.business.system.SysUserService;
+import org.business.util.SysFuncCache;
 import org.dao.hibernate.system.RoleDao;
 import org.dao.hibernate.system.UserDao;
 import org.dao.hibernate.system.UserRoleDao;
@@ -31,6 +32,9 @@ public class SysUserServiceImpl extends AbstractServiceImpl<User> implements Sys
 	@Autowired
 	private RoleDao roleDao;
 	
+	@Autowired
+	private SysFuncCache sysFuncCache;
+	
 	@Transactional
 	@Override
 	public void save(User user, String ids) {
@@ -51,13 +55,16 @@ public class SysUserServiceImpl extends AbstractServiceImpl<User> implements Sys
 		// 3.本次分配的角色
 		List<Role> roles = StringUtils.isNotEmpty(ids) ? roleDao
 				.queryByIds(ids) : new ArrayList<Role>();
+		boolean update = false;
 		for (UserRole ur : permissions) {
 			Role role = ur.getRole();
 			if (roles.contains(role)) {// 原来有的角色，本次也选择了的。那么不用再加入
 				roles.remove(role);
+				update = true;
 			} else {
 				ur.disable(); // 又来有的角色，但本次没有选择的。那么需要失效
 				userRoleDao.update(ur);
+				update = true;
 			}
 		}
 		// 4.保存本次增加的角色
@@ -66,6 +73,14 @@ public class SysUserServiceImpl extends AbstractServiceImpl<User> implements Sys
 			userRole.init();
 			userRoleDao.saveOrUpdate(userRole);
 		}
+		if(!roles.isEmpty()){
+			update = true;
+		}
+		//这里添加update标记，是为了标记是否需要更新已经登录之后的用户的权限缓存
+		if(update){
+			sysFuncCache.refresh(user.getUserCd());
+		}
+		
 	}
 
 	@Transactional

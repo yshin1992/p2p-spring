@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.domain.system.Application;
 import org.domain.system.Menu;
+import org.domain.system.Resource;
 
 public interface PermissionService {
 
@@ -31,5 +32,13 @@ public interface PermissionService {
 	 * @return
 	 */
 	List<String> queryPermissionsByUser(String userCd);
+
+
+	/**
+	 * 根据用户编码查询用户所拥有的全部资源
+	 * @param userCd
+	 * @return
+	 */
+	List<Resource> queryResourcesByUser(String userCd);
 	
 }

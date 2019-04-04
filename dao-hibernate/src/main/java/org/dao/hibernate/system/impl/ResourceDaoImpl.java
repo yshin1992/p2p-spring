@@ -22,7 +22,8 @@ public class ResourceDaoImpl implements ResourceDao {
 	public Resource findByCd(String resourceCd) {
 		TypedQuery<Resource> query = entityManager.createQuery("from Resource where resourceCd=:resourceCd",Resource.class);
 		query.setParameter("resourceCd", resourceCd);
-		return query.getResultList().size()>0 ? query.getResultList().get(0) : null;
+		List<Resource> resultList = query.getResultList();
+		return resultList.size() >0 ? resultList.get(0)  : null;
 	}
 
 	@Override
@@ -86,6 +87,15 @@ public class ResourceDaoImpl implements ResourceDao {
 		TypedQuery<Resource> query = entityManager.createQuery(sb.toString(), Resource.class);
 		query.setParameter("userCd", userCd);
 		return query.getResultList();
+	}
+
+	@Override
+	public Resource findByUrl(String url) {
+		StringBuilder sb = new StringBuilder("from Resource where state='F0A' and (now() between effTime and expTime) and resourceLink=:url");
+		TypedQuery<Resource> query = entityManager.createQuery(sb.toString(), Resource.class);
+		query.setParameter("url", url);
+		List<Resource> resultList = query.getResultList();
+		return resultList.size() >0 ? resultList.get(0)  : null;
 	}
 
 }

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="tags/manager"  prefix="mgr" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -14,13 +15,18 @@ body {
 </style>
 </head>
 <body>
+<mgr:navs navigations="${navs }"/>
 <div class="layui-form layui-form-pane">
+<%--  
 <div class="layui-inline">
 		<a class="layui-btn" href="${webRoot}/system/roleEdit">新增</a>
 		<button class="layui-btn" id="edit">编辑</button>
 		<button class="layui-btn layui-btn-primary" id="enable">启用</button>
 		<button class="layui-btn layui-btn-primary" id="disable">禁用</button>
 	</div>
+
+--%>
+<mgr:btn resources="${resources }"/>
 </div>
 	<table class="layui-hide" id="content"></table>
 	<script type="text/javascript">
@@ -55,6 +61,10 @@ body {
 						page:1
 					}
 				});
+			})
+			
+			$("#save").click(function(){
+				$(location).attr("href","${webRoot}/system/roleEdit");
 			})
 			
 			$("#edit").click(function(){

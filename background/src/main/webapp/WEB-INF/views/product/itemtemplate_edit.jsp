@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="tags/manager"  prefix="mgr" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -14,6 +15,7 @@ body{
 </style>
 </head>
 <body>
+<mgr:navs navigations="${navs }"/>
 <form class="layui-form" action="${webRoot }/itemTemplateSave" method="post">
 	<input type="hidden" name="templateId" value="${itemTemplate.templateId }"/>
 	<input type="hidden" name="itemIds" value="${itemTemplate.itemTypesId }">
