@@ -26,7 +26,7 @@ public interface AbstractService<T extends AbstractEntity> {
 	
 	PageResponse<T> queryPageByHQL(String HQL,Map<String,Object> condition,PageRequest request);
 	
-	Long countHSQL(String HSQL,Map<String,Object> condition);
+	Long countHSQL(boolean isHQL,String HSQL,Map<String,Object> condition);
 	
 	T findSingleResultByHQL(String HQL,Map<String,Object> condition);
 	

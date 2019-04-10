@@ -5,18 +5,7 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-import javax.persistence.Transient;
+import javax.persistence.*;
 
 import org.apache.commons.lang3.StringUtils;
 import org.domain.DynamicEntity;
@@ -55,7 +44,11 @@ public class Member extends DynamicEntity{
 	@GeneratedValue(generator = "systemUUID")
 	@Column(length = 32)
 	private String memberId;// 会员ID
-	
+
+	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, optional = true)
+	@PrimaryKeyJoinColumn
+	private Enterprise enterprise;
+
 	@JsonIgnore
 	@OneToMany(mappedBy = "member", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private Set<Audit> audits = new HashSet<Audit>();
@@ -565,6 +558,14 @@ public class Member extends DynamicEntity{
 
 	public void setAddress(String address) {
 		this.address = address;
+	}
+
+	public Enterprise getEnterprise() {
+		return enterprise;
+	}
+
+	public void setEnterprise(Enterprise enterprise) {
+		this.enterprise = enterprise;
 	}
 
 	@Override

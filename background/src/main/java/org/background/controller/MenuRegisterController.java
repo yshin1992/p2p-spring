@@ -25,7 +25,7 @@ public class MenuRegisterController {
 	}
 
 	@RequiresPermissions("p2p.product.manager")
-	@MenuEx(name = "项目管理", code = "p2p.product.manager", parentCd = "p2p.product", listSort = 100100)
+	@MenuEx(name = "项目管理", code = "p2p.product.manager", parentCd = "p2p.product", listSort = 10100)
 	public void productMg() {
 
 	}
@@ -40,6 +40,12 @@ public class MenuRegisterController {
 	@RequiresPermissions("p2p.product.apply")
 	@MenuEx(code = "p2p.product.apply", name = "借款申请", parentCd = "p2p.product", listSort = 10300)
 	public void product_apply() {
+	}
+
+	@RequiresPermissions("p2p.product.contract")
+	@MenuEx(code = "p2p.product.contract",name="合同管理",parentCd = "p2p.product",listSort = 10400)
+	public void product_contract(){
+
 	}
 
 	// /////////////////资金管理/////////////////////////////

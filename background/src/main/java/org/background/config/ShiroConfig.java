@@ -98,6 +98,7 @@ public class ShiroConfig {
 	public FormAuthenticationFilter formAuthenticationFilter(){
 		FormAuthenticationFilter filter = new CustomerFormAuthenticationFilter();
 		filter.setSuccessUrl("/index");
+		filter.setLoginUrl("/login");
 		return filter;
 	}
 

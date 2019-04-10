@@ -76,4 +76,21 @@ public class StringUtil {
 		}
 		return shortBuffer.toString();
 	}
+
+	public static boolean isEmpty(String value){
+		return (value == null) || (value.trim().length() <= 0);
+	}
+
+	public static boolean isNotEmpty(String value){
+		return !isEmpty(value);
+	}
+
+	public static boolean isEmpty(Object value){
+		String s1 = value == null ? "" : value.toString();
+		return isEmpty(s1);
+	}
+
+	public static boolean isNotEmpty(Object value){
+		return !isEmpty(value);
+	}
 }

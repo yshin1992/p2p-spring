@@ -1,10 +1,12 @@
 package org.dao.hibernate.product.impl;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
 import org.apache.commons.lang3.StringUtils;
@@ -103,6 +105,15 @@ public class ItemTypeDaoImpl implements ItemTypeDao {
 			entityManager.remove(type);
 			entityManager.flush();
 		}
+	}
+	
+	@Override
+	public List<ItemType> findByTemplateId(String id) {
+		String sql = "SELECT i.* FROM itemtemplate itemp,itemtemplate_itemtype itype,itemtype i "
+				+ " WHERE itemp.templateId=:templateId AND itype.itemtemplate_id = itemp.templateId AND i.itemTypeId = itype.itemtype_id";
+		Query query = entityManager.createNativeQuery(sql, ItemType.class);
+		query.setParameter("templateId", id);
+		return query.getResultList();
 	}
 
 }

@@ -1,5 +1,7 @@
 package org.dao.hibernate.product;
 
+import java.util.List;
+
 import org.domain.product.ItemType;
 
 import pagination.PageRequest;
@@ -16,4 +18,6 @@ public interface ItemTypeDao {
 	public String getCategoryMaxCd(String feeType);
 	
 	public void deleteById(String id);
+	
+	public List<ItemType> findByTemplateId(String id);
 }

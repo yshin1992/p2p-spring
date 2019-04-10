@@ -113,7 +113,7 @@ public class User extends StaticEntity{
 	/**加密密码*/
 	@Transient
 	public String getMD5Password() {
-		return StringUtil.getMD5(StringUtil.getMD5(password)+userCd);
+		return StringUtil.isEmpty(password)? "" : StringUtil.getMD5(StringUtil.getMD5(password)+userCd);
 	}
 	public void setPassword(String password) {
 		this.password = password;

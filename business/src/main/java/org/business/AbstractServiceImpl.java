@@ -63,8 +63,8 @@ public class AbstractServiceImpl<T extends AbstractEntity> implements AbstractSe
 	}
 
 	@Override
-	public Long countHSQL(String HSQL, Map<String, Object> condition) {
-		return abstractDao.countHSQL(HSQL, condition);
+	public Long countHSQL(boolean isHQL,String HSQL, Map<String, Object> condition) {
+		return abstractDao.countHSQL(isHQL,HSQL, condition);
 	}
 
 	@Override

@@ -84,31 +84,21 @@ public class AbstractDaoImpl<T extends AbstractEntity> implements AbstractDao<T>
 	@Override
 	public PageResponse<T> queryPageByHQL(String HQL,
 			Map<String, Object> condition, PageRequest request) {
-		TypedQuery<T> query = entityManager.createQuery(HQL,entityClass);
-		for(String key:condition.keySet()){
-			query.setParameter(key, condition.get(key));
-		}
-		query.setFirstResult(request.getFirstResultNo());
-		query.setMaxResults(request.getLimit());
-		List<T> resultList = query.getResultList();
-		
-		PageResponse<T> pager = new PageResponse<T>(request);
-		pager.setData(resultList);
-		pager.setCount(this.countHSQL(HQL, condition));
-		return pager;
+		return queryPageByHSQL(true,HQL,request,condition);
 	}
 
 	@Override
-	public Long countHSQL(String HSQL, Map<String, Object> condition) {
+	public Long countHSQL(boolean isHQL, String HSQL, Map<String, Object> condition) {
 		if(StringUtils.isEmpty(HSQL)){
 			return 0L;
 		}
 		String tmp = "select count(0) " + HSQL.substring(HSQL.indexOf("from"));
-		Query query = entityManager.createQuery(tmp);
+		Query query = isHQL ? entityManager.createQuery(tmp) : entityManager.createNativeQuery(tmp);
 		for(String key:condition.keySet()){
 			query.setParameter(key, condition.get(key));
 		}
-		return (Long) query.getSingleResult();
+		Object singleResult = query.getSingleResult();
+		return Long.valueOf(singleResult.toString());
 	}
 
 	@Override
@@ -156,6 +146,30 @@ public class AbstractDaoImpl<T extends AbstractEntity> implements AbstractDao<T>
 		T find = entityManager.find(entityClass, id);
 		entityManager.remove(find);
 		entityManager.flush();
+	}
+
+	private PageResponse<T> queryPageByHSQL(boolean isHQL,String HSQL,PageRequest pageRequest, Map<String, Object> condition){
+		if(StringUtils.isEmpty(HSQL)){
+			return null;
+		}
+		Query query = isHQL ? entityManager.createQuery(HSQL):entityManager.createNativeQuery(HSQL,entityClass);
+		for(String key:condition.keySet()){
+			query.setParameter(key, condition.get(key));
+		}
+		query.setFirstResult(pageRequest.getFirstResultNo());
+		query.setMaxResults(pageRequest.getLimit());
+		@SuppressWarnings("unchecked")
+		List<T> resultList = query.getResultList();
+
+		PageResponse<T> pager = new PageResponse<T>(pageRequest);
+		pager.setData(resultList);
+		pager.setCount(this.countHSQL(isHQL,HSQL, condition));
+		return pager;
+	}
+
+	@Override
+	public PageResponse<T> queryPageBySql(String sql, PageRequest pageRequest, Map<String, Object> condition) {
+		return queryPageByHSQL(false,sql,pageRequest,condition);
 	}
 
 }

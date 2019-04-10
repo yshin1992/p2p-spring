@@ -28,7 +28,7 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
 	public OpenEntityManagerInViewFilter openEntityManagerInViewFilter(){
 	   return new OpenEntityManagerInViewFilter();
 	}
-	
+
 	@Bean
 	public URLRequestInterceptor urlHandlerInterceptor(){
 		URLRequestInterceptor interceptor = new URLRequestInterceptor();
